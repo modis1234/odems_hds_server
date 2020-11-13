@@ -1,0 +1,5 @@
+<div class="component-logView">
+    <ul id="log-realTime-box">
+        
+    </ul>
+</div>

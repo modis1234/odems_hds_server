@@ -1,0 +1,349 @@
+define([
+    "text!views/receiver",
+	"css!cs/stylesheets/adminPage.css"
+], function (
+    receiver
+) {
+    var ReceiverModel = Backbone.Model.extend({
+		url: '/account/receiver',
+		parse: function (result) {
+			return result;
+		}
+	});
+
+	return Backbone.View.extend({
+        el: '.component-box',
+		config: {
+            grid: {
+                name:'receiverGrid',
+                show: { 
+                    toolbar: true,
+                    selectColumn: true
+                },
+                toolbar: {
+                    items: [
+                        { type: "button", id: "deleteBtn", caption: "Delete", icon: 'fas fa-times-circle' }
+                    ],
+                    onClick: function (evt) {
+                        console.log(evt.target);
+                        var target = evt.target;
+                        if (target === 'w2ui-reload') {
+                            window.main.view.adminView.receiverModel.fetch()
+                        }
+                        else if (target === 'deleteBtn') {
+                            var grid =window.w2ui['receiverGrid'];
+                            var selectIdArr = grid.getSelection();
+                            var _selectIdCnt = selectIdArr.length;
+                            if (_selectIdCnt) {
+                                var options = {
+                                    msg: "선택 된 " + _selectIdCnt + "개 데이터를 삭제하시겠습니까?",
+                                    title: 'Confirmation',
+                                    width: 450,
+                                    height: 220,
+                                    btn_yes: {
+                                        text: '확인',
+                                        class: '',
+                                        style: 'background-image:linear-gradient(#73b6f0 0,#2391dd 100%); color: #fff',
+                                        callBack: function () {
+                                            console.log("yes");
+                                            for (var i in selectIdArr) {
+                                                window.main.view.adminView.delete(selectIdArr[i]);
+
+                                            }
+                                        }
+                                    },
+                                    btn_no: {
+                                        text: '취소',
+                                        class: '',
+                                        style: '',
+                                        callBack: function () {
+                                            console.log("no");
+                                        }
+                                    },
+                                    callBack: null
+                                };
+                                w2confirm(options);
+    
+                            } else {
+                                w2alert("삭제할 데이터를 선택하세요");
+                            }
+                        }
+                        else if(target === 'w2ui-column-on-off'){
+                            // $('.w2ui-col-on-off tr:nth-child(1)').css('display','none');
+                            // $('.w2ui-col-on-off tr:nth-child(7)').css('display','none');
+
+                        }
+                    } //end items- onClick
+                },
+                recid: "id",      
+                columns: [                
+                    { field: 'name', caption: '이름', size: '15%', attr: "align=center"},
+                    { field: 'tel', caption: '연락처', size: '25%', attr: "align=center"},
+                    { field: 'desc', caption: '', size: '60%', attr: "align=right"}
+
+                ],
+                records: undefined,
+                onClick: function(event) {
+                    var grid = this;
+                    var form = window.w2ui['receiverForm'];
+                    console.log(event);
+                    event.onComplete = function () {
+                        var sel = grid.getSelection();
+                        if (sel.length == 1) {
+                            form.recid  = sel[0];
+                            form.record = $.extend(true, {}, grid.get(sel[0]));
+                            form.refresh();
+                        } else {
+                            form.clear();
+                        }
+                    }
+                }
+            }, // end grid
+            form: {
+                name: 'receiverForm',
+                header: '수신자 정보',
+                fields: [
+                    { name: 'name', type: 'text', html: { caption: '이름', attr: 'style="width: 90px; height: 24px;" ' } },
+                    { name: 'tel', type: 'text', html: { caption: '연락처', attr: 'style="width: 180px; height: 24px;" ' } },
+                ],
+                actions: {
+                    'reset' : function(){
+                        var form = this;
+                        form.clear();
+                        window.w2ui['receiverGrid'].selectNone();
+
+                    },
+                    'save' : function(){
+                        var form = this;
+                        var record = form.record;
+                        console.log(record);
+                       // window.main.view.adminView.update(record);
+                       var _id = record['id'];
+                       if(_id){
+                            console.log('update');
+                            var options = {
+                                msg: "선택 된 수신자를 수정하시겠습니까?",
+                                title: 'Confirmation',
+                                width: 450,
+                                height: 220,
+                                btn_yes: {
+                                    text: '확인',
+                                    class: '',
+                                    style: 'background-image:linear-gradient(#73b6f0 0,#2391dd 100%); color: #fff',
+                                    callBack: function () {
+                                        console.log("yes");
+                                        window.main.view.adminView.update(record);
+                                    }
+                                },
+                                btn_no: {
+                                    text: '취소',
+                                    class: '',
+                                    style: '',
+                                    callBack: function () {
+                                        console.log("no");
+                                    }
+                                },
+                                callBack: null
+                            };
+                            w2confirm(options);
+
+                       } else {
+                           console.log('insert');
+                           var options = {
+                            msg: "새로운 수신자를 등록 하시겠습니까?",
+                            title: 'Confirmation',
+                            width: 450,
+                            height: 220,
+                            btn_yes: {
+                                text: '확인',
+                                class: '',
+                                style: 'background-image:linear-gradient(#73b6f0 0,#2391dd 100%); color: #fff',
+                                callBack: function () {
+                                    console.log("yes");
+                                    window.main.view.adminView.insert(record);
+
+                                }
+                            },
+                            btn_no: {
+                                text: '취소',
+                                class: '',
+                                style: '',
+                                callBack: function () {
+                                    console.log("no");
+                                }
+                            },
+                            callBack: null
+                        };
+                        w2confirm(options);
+                       }
+
+
+                    }
+                }, //end actions
+                onAction : function(event){
+                    var target = event.target;
+
+                },
+                onChange:  function(event){
+                    var target = event.target;
+ 
+                }             
+            } // end form 
+		},
+		initialize: function () {
+			console.log('receiver.js');
+            this.$el.html(receiver)
+            this.render();
+        },
+        events: {
+            'keyup input#tel' : 'inputPhoneNumber'
+		},
+        render: function (){
+            var _this = this;
+            var gridOption = _this.config.grid;
+            _this.$el.find('#receiver_grid').w2grid(gridOption);
+            var formOption = _this.config.form;
+            _this.$el.find('#receiver_form').w2form(formOption);
+            
+            this.receiverModel = new ReceiverModel();
+			this.listenTo(this.receiverModel, "sync", this.getReceiverList);
+			this.receiverModel.fetch();
+            _this.initForm();
+            _this.initGrid();
+        },
+        getReceiverList: function(model, response) {
+            var _this =this;
+            var result = response;
+            var gridName = _this.config.grid['name'];
+            window.w2ui[gridName].records = result;
+            window.w2ui[gridName].render();
+
+            console.log(result);
+        },
+        initForm: function(){
+            var _this = this;
+            _this.$el.find('button[name=reset]').text('새등록');
+            _this.$el.find('button[name=save]').text('저장');
+        },
+        initGrid: function(){
+            var _this = this;
+            _this.$el.find('.w2ui-col-on-off tr:nth-child(1)').css('display','none');
+            _this.$el.find('.w2ui-col-on-off tr:nth-child(7)').css('display','none');
+
+        },  
+        inputPhoneNumber: function(event){
+            console.log(event.target);
+            var $target = $(event.target);
+           var number = $target.val().replace(/[^0-9]/g, "");
+            var phone = "";    
+        
+            if(number.length < 4) {
+                return number;
+            } else if(number.length < 7) {
+                phone += number.substr(0, 3);
+                phone += "-";
+                phone += number.substr(3);
+            } else if(number.length < 11) {
+                phone += number.substr(0, 3);
+                phone += "-";
+                phone += number.substr(3, 3);
+                phone += "-";
+                phone += number.substr(6);
+            } else {
+                phone += number.substr(0, 3);
+                phone += "-";
+                phone += number.substr(3, 4);
+                phone += "-";
+                phone += number.substr(7);
+            }
+            $target.val(phone);
+
+        },
+        insert: function(obj){
+            var _this = this;
+            var model = new ReceiverModel();
+            var insertObj = {};
+            insertObj.name = obj.name;
+            insertObj.tel = obj.tel;
+            model.set(insertObj);
+            model.save({}, {
+                success: function(modle, response){
+                    var result = response;
+                    var gridName = _this.config.grid['name'];
+                    var formName = _this.config.form['name'];
+
+                    window.w2ui[gridName].add(result);
+					window.w2ui[formName].clear();
+                },
+                error: function(){
+
+                }
+            });
+        },
+        update: function(obj){
+            var _this = this;
+			var model = new ReceiverModel();
+            model.url += "/" + obj.id;
+            var updateObj = {};
+            updateObj['id'] = obj['id'];
+            updateObj['name'] = obj['name'];
+            updateObj['tel'] = obj['tel'];
+
+            console.log(updateObj);
+			model.set(updateObj);
+			model.save({}, {
+				success: function (model, response) {
+                    var result = response;
+                    console.log(response);
+                    var gridName = _this.config.grid['name'];
+                    window.w2ui[gridName].set(obj['id'], obj);
+                    var formName = _this.config.form['name'];
+                    //window.w2ui[formName].clear();
+				},
+				error: function (model, response) {
+
+				}
+			});
+        },
+        delete: function(id){
+            var _this = this;
+			console.log(id);
+			var _id = id || 0;
+			var obj = {};
+			obj.id = _id;
+			var model = new ReceiverModel();
+			model.set(obj);
+			model.url += "/" + _id;
+			console.log(model.url);
+			model.destroy({
+                success: function (model, response) {
+                    console.log("success");
+                    var gridName = _this.config.grid['name'];
+                    var formName = _this.config.form['name'];
+
+                    window.w2ui[gridName].remove(_id);
+                    window.w2ui[gridName].selectNone();
+                    window.w2ui[formName].clear();
+
+                    
+				},
+				error: function () {
+
+				},
+			});
+        },
+		destroy: function () {
+			var _this = this;
+			var gridName = _this.config.grid['name'];
+			var formName = _this.config.form['name'];
+
+			if (window.w2ui.hasOwnProperty(gridName)) {
+				window.w2ui[gridName].destroy();
+			}
+			if (window.w2ui.hasOwnProperty(formName)) {
+				window.w2ui[formName].destroy();
+			}
+			this.undelegateEvents();
+		},
+	});
+});

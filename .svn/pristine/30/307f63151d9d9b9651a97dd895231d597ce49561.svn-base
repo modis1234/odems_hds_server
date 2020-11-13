@@ -1,0 +1,4 @@
+<div class="contents-box">
+    <div class="left-contents" id="receiver_grid"></div>
+    <div class="right-contents" id="receiver_form"></div>
+</div>

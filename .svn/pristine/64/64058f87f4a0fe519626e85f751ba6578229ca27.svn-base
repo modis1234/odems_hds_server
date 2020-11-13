@@ -1,0 +1,373 @@
+var express = require('express');
+var router = express.Router();
+var request = require('request');
+
+var servers = require('./config/servers');
+var xl = require('excel4node');
+
+/* GET users listing. */
+router.get('/networks', function(req, res, next) {
+    var geturl = servers.apisvr.url + '/api/network/1'
+    request.get({
+            url:geturl,
+            json: true
+        }, function(error, _res, body){
+        if(!error){
+            var _networks = _res.body;
+
+            res.json(_networks);
+        }else {
+            res.send(error);
+        }
+    });
+
+});
+
+// error list 호출
+router.get('/networks/error', function(req, res, next){
+    var errorURL = servers.apisvr.url + '/api/network/error';
+
+    request.get({
+            url:errorURL,
+            json: true
+        }, function(error, _res, body){
+        if(!error){
+            res.json(_res.body);
+        }else {
+            res.send(error);
+        }
+    });
+
+    
+    
+});
+
+router.post('/networks', function(req, res, next){
+    var posturl = servers.apisvr.url + '/api/network';
+    var reqBody = req.body;
+    
+    request.post({
+        url:posturl,
+        body:{
+            url: reqBody.url,
+            port: reqBody.port,
+            neType: reqBody.neType,
+            location: reqBody.location,
+            companyId: reqBody.companyId,
+            siteId: reqBody.siteId,
+            description: reqBody.description
+        },
+        json:true},
+    function(error, _res, _body){
+        if(!error){
+            console.log(_body);
+            reqBody["id"]=_body.insertId;
+            console.log("reqBody-->>>", reqBody);
+            res.send(reqBody);
+            //res.redirect(servers.apisvr.url + '/api/network');
+        }else{
+            res.status(404).end();
+        }
+    });
+});
+
+router.put('/networks/:id', function(req, res, next){
+    var _id = req.params.id;
+    var reqBody = req.body;
+    var puturl  = servers.apisvr.url + '/api/network/'+_id;
+    console.log(reqBody);
+    request.put({
+        url: puturl,
+        body: {
+            url: reqBody.url,
+            port: reqBody.port,
+            neType: reqBody.neType,
+            location: reqBody.location,
+            companyId: reqBody.companyId,
+            siteId: reqBody.siteId,
+            description: reqBody.description
+        },
+        json:true
+    }, function(error, _res, _body) {
+        if(!error){
+            console.log(_body);
+            res.send(reqBody);
+        }else {
+            res.status(404).end();
+        }
+    });
+
+});
+
+router.delete('/networks/:id', function(req, res, next) {
+    var _id = req.params.id;
+    var deleteurl = servers.apisvr.url + '/api/network/'+_id;
+    console.log(_id);
+    request.delete({
+        url: deleteurl,
+        body: {},
+        json: true
+    }, function(error, _res,_body) {
+        if(!error) {
+            res.send(_body);
+        }else {
+            res.status(404).end();
+        }
+    });
+});
+
+//사이트 모니터링
+router.get('/networks/site', function(req, res, next){
+    var siteurl = servers.apisvr.url +'/api/network/site';
+    request.get({
+        url:siteurl,
+        json: true
+    }, function(error, _res, body){
+        if(!error){
+            var _siteList = _res.body;
+
+            var siteCntList =[];
+            //var siteObj = {id:1, site_name:"대곡-소사", connetUrl:"http://..", bleScanner:0,cctv:0 ,nvr:0 ,gas:0 ,ups:0 ,server:0 };
+            for(var i in _siteList){
+                var siteObj = {};
+                var _siteName = _siteList[i].site_name;
+                if(_siteName){
+                    siteObj.id = _siteList[i].site_id;
+                    siteObj.site_name=_siteName;
+                    var deviceType = _siteList[i].device_name;
+                    var siteIdx = siteCntList.findIndex((item, idx)=>{
+                        return item.id === _siteList[i].site_id;
+                    });
+                    if(siteIdx > -1){
+                        siteCntList[siteIdx][deviceType] = _siteList[i].neType_count;
+                    }
+                    else if(siteIdx === -1){
+                        siteObj[deviceType] = _siteList[i].neType_count; 
+                        siteCntList.push(siteObj);
+                    }
+                }
+            }
+            console.log(siteCntList);
+
+            res.json(siteCntList);
+        }else {
+            res.send(error);
+        }
+    });   
+});
+
+router.get('/networks/site/:id',function(req, res, next){
+    var _id = req.params.id;
+    var siteurl = servers.apisvr.url +'/api/network/site/'+_id;
+
+    request.get({
+        url:siteurl,
+        json: true
+    }, function(error, _res, body){
+        if(!error){
+            var _networks = _res.body;
+            res.json(_networks);
+        }else {
+            res.send(error);
+        }
+    });
+});
+
+// 장애이력 조회( 조회 )
+router.get('/error',function(req, res, next){
+    var _id = req.params.siteId;
+    var siteurl = servers.apisvr.url +'/api/error/site/1';
+    request.get({
+        url:siteurl,
+        json: true
+    }, function(error, _res, body){
+        if(!error){
+            var _errorList = _res.body;
+            console.log(_errorList);
+            res.json(_errorList);
+        }else {
+            res.send(error);
+        }
+    });
+});
+
+
+// 검색
+/* 
+  @body startDate
+  @body endDate
+  @body siteId
+  @body deviceId(필수x)
+*/
+
+
+// 장애이력 조회( 검색 )
+router.post('/error/search', function(req, res, next) {
+    var searchURL = servers.apisvr.url +'/api/error/search';
+    var reqBody = req.body;
+    reqBody.siteId = 1;
+    request.post({
+        url: searchURL,
+        body: reqBody,
+        json: true,
+    }, function(error, _res, _body) {
+        if(!error){
+            var _errorList = _body;
+            console.log(_errorList);
+            res.json(_body);
+            searchList = _errorList;
+            searchBody =reqBody;
+
+        } else {
+            res.send(error);
+        }
+    });
+});
+
+// 장애 발생 설치위치 조회
+router.get('/error/location',function(req, res, next){
+    var siteurl = servers.apisvr.url +'/api/error/location/1';
+
+    request.get({
+        url:siteurl,
+        json: true
+    }, function(error, _res, body){
+        if(!error){
+            var _errorList = _res.body;
+            console.log(_errorList);
+            res.json(_errorList);
+        }else {
+            res.send(error);
+        }
+    });
+});
+
+// 엑셀 다운로드
+var searchList;
+var searchBody;
+router.get('/error/excelDown', function(req, res, next){
+    console.log(searchBody['startDate']);
+
+    if(searchBody.length != 0){
+        var wb= excelDownHandler(searchList);
+        wb.write('대곡-소사 복선전철 민간투자 시설사업 제2공구 유지관리 통합관제 시스템_장애이력 조회('+searchBody["startDate"]+'_'+searchBody["endDate"]+').xlsx', res);
+    }
+});
+
+function excelDownHandler(data){
+    var _data = data;
+    console.log
+    var wb = new xl.Workbook();
+    var ws = wb.addWorksheet('sheet1');
+    var style1 = wb.createStyle({
+        alignment: {
+            vertical: ['center']
+        },
+        font: {
+            size: 10,
+            bold: false
+        },
+        border: {
+            left: {
+                style: 'thin',
+                color: '#000000'
+            },
+            right: {
+                style: 'thin',
+                color: '#000000'
+            },
+            top: {
+                style: 'thin',
+                color: '#000000'
+            },
+            bottom: {
+                style: 'thin',
+                color: '#000000'
+            }
+        }
+    });
+
+    ws.column(1).setWidth(10);
+    ws.column(2).setWidth(40);
+    ws.column(3).setWidth(20);
+    ws.column(4).setWidth(20);
+    ws.column(5).setWidth(20);
+
+    ws.cell(1, 1).string('타입').style(style1);
+    ws.cell(1, 2).string('설치위치').style(style1);
+    ws.cell(1, 3).string('장애발생').style(style1);
+    ws.cell(1, 4).string('복구').style(style1);
+    ws.cell(1, 5).string('장애 누적 시간').style(style1);
+
+
+    for (let i = 0; i < data.length; i++) {
+        var index = i+2;
+        for (let j = 1; j < 6; j++) {      
+           if(j == 1){
+               var _deviceId = data[i]['device_id'];
+               var _deviceName; 
+               switch(_deviceId) {
+                    case 1:
+                        _deviceName =  'CCTV';
+                        break;
+                    case 2:
+                        _deviceName =  '스캐너';
+                        break;
+                    case 3:
+                        _deviceName =  'UPS';
+                        break;   
+                    case 4:
+                        _deviceName =  'SERVER';
+                        break;
+                    case 5:
+                        _deviceName =  'WIFI';
+                        break;
+                    case 6:
+                        _deviceName =  '중계기';
+                        break;
+                    case 7:
+                        _deviceName =  '가스센서';
+                        break;
+                }
+                ws.cell(index, j).string(_deviceName).style(style1);
+
+           }
+           else if(j == 2){
+               ws.cell(index, j).string(data[i]['location']).style(style1);
+           }
+           else if(j == 3){
+               var _errorTime = data[i]['error_time'];
+               if(_errorTime){
+                   _errorTime = _errorTime.replace('T', ' | ');
+                   _errorTime = _errorTime.substr(0, _errorTime.lastIndexOf(':'));
+               }
+                ws.cell(index, j).string(_errorTime).style(style1);
+            }
+            else if(j == 4){
+                var _restoreTime = data[i]['restore_time'];
+                if(_restoreTime){
+                    _restoreTime = _restoreTime.replace('T', ' | ');
+                    _restoreTime = _restoreTime.substr(0, _restoreTime.lastIndexOf(':'));
+
+                }
+                ws.cell(index, j).string(_restoreTime).style(style1);
+            }
+            else if(j == 5){
+                var _errorTime = data[i]['error_time'];
+                var _calculRestoreTime =  data[i]['restore_time'] ? data[i]['restore_time'] : new Date();
+                var termTime = new Date(_calculRestoreTime) - new Date(_errorTime);
+                var hour = Math.floor((termTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minute = Math.floor((termTime % (1000 * 60 * 60)) / (1000 * 60));
+                var sec = Math.floor((termTime % (1000 * 60)) / 1000);
+                var delayTime = hour+'시간'+minute+'분'+sec+'초';
+                
+                ws.cell(index, j).string(delayTime).style(style1);
+            }
+            
+        }
+    }
+
+    return wb;
+}
+
+module.exports = router;

@@ -1,0 +1,27 @@
+
+/* @import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,700&display=swap'); */
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap&subset=korean');
+html,body,h1,h2,h3,h4,h5,h6,div,p,blockquote,pre,code,address,ul,ol,li,menu,nav,section,article,aside,dl,dt,dd,table,thead,tbody,tfoot,label,caption,th,td,form,fieldset,legend,hr,input,button,textarea,object,figure,figcaption {
+	font-family : 'Noto Sans KR', sans-serif;
+ 	font-size : 14px;
+	color: #fff;
+}
+
+html,body{
+	background: #2e2e2e;
+}
+
+html,body,h1,h2,h3,h4,h5,h6,div,p,blockquote,pre,code,address,ul,ol,li,menu,nav,section,article,aside,dl,dt,dd,table,thead,tbody,tfoot,label,caption,th,td,form,fieldset,legend,hr,input,button,textarea,object,figure,figcaption {
+	margin : 0;
+	padding : 0;
+}
+ul li{
+	list-style-type: none;
+}
+.clear {clear : both;}
+.clear:after { content : ""; display : block; clear : both;}
+
+a {color : #666; text-decoration:none}
+a:focus, a:hover{text-decoration:none}
+img,fieldset, button {border:0;}
+

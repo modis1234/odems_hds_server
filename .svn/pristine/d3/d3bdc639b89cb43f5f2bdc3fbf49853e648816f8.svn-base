@@ -1,0 +1,10 @@
+<div class="logo" id="logo-btn"><img src="./images/hdLOGO.png"></div>
+<div class="tit">대곡-소사 복선전철 민간투자 시설사업 제2공구 <span>유지관리 통합관제</span> 시스템</div>
+<div class="headerBtn" value=<%- role %>>
+    <ul>
+        <li class="devcie-toggle-box"><i class="fas fa-server"></i><br>디바이스</li>
+        <li class="upsLocate-toggle-box"><i class="fas fa-map-marker-alt"></i><br>위치정보</li>
+        <li class="admin-box"><i class="fas fa-cog"></i><br>관리자</li>
+        <li id='logout-btn'><i class="fas fa-sign-out-alt"></i><br>로그아웃</li>
+    </ul>
+</div>

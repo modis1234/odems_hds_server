@@ -1,0 +1,617 @@
+define([
+    "text!views/upserr",
+	"text!views/searchForm",
+	"css!cs/stylesheets/adminPage.css"
+], function (
+    upsError,
+    searchForm
+) {
+    var ErrorModel = Backbone.Model.extend({
+        url: '/ups/error',
+        parse: function(result){
+            return result;
+        }
+    });
+
+	return Backbone.View.extend({
+        el: '.component-box',
+        upsList: undefined,
+		config: {
+			form: {
+                name: 'upsErrorForm',
+                formHTML: searchForm,
+                header: '검색',
+                fields: [
+                    { name: 'startDate', type: 'date', options:{ format: 'yyyy/mm/dd', end: $('input[name=endDate]'), keyboard: false, silent:false}},
+                    { name: 'endDate', type: 'date', options:{ format: 'yyyy/mm/dd', end: $('input[name=startDate]'), keyboard: false, silent:false}},
+                    { name: 'location', type: 'list', options: { items: window.main.view.upsList} },
+                ],
+                actions: {
+                    'reset': function(){
+                        var form = this;
+                        form.clear();
+                        window.main.view.adminView.initForm();
+                        window.w2ui['upsErrorGrid'].clear();
+                        $('.w2ui-footer-left').text('');
+                        window.w2ui['upsErrorGrid'].off('refresh:after');
+
+
+                    },
+                    'save' : function(){
+                        var form = window.w2ui['upsErrorForm'];
+                        var record = form.record;
+
+                        var _tempStartDate = record['startDate'] ? record['startDate'] : $('input[name=startDate]').val();
+                        var _startDate=_tempStartDate.replace(/\//g,'-');
+                        
+                        var _tempEndDate = record['endDate'] ? record['endDate'] : $('input[name=endDate]').val();
+                        var toDate = new Date(_tempEndDate);
+                        toDate.setDate(toDate.getDate()+1);
+                        var toYear = toDate.getFullYear();
+                        var toMonth = toDate.getMonth()+1 >= 10 ? toDate.getMonth()+1 : '0'+(toDate.getMonth()+1);
+                        var toDay = toDate.getDate() >= 10 ? toDate.getDate() : '0'+toDate.getDate();
+                        var _endDate = toYear+'-'+toMonth+'-'+toDay;
+                    
+                        var upsIndex = record['location'] ? record['location']['value'] : undefined; 
+
+                        var searchObj = {};
+                        searchObj.startDate = _startDate;
+                        searchObj.endDate = _endDate;
+                        searchObj.upsIndex = upsIndex;
+
+                        window.main.view.adminView.search(searchObj);
+
+                        $('.w2ui-icon-collapse').trigger('click');
+                        window.w2ui['upsErrorGrid'].off('refresh:after');
+                    }
+                }, //end actions
+                onAction : function(event){
+                    var target = event.target;
+                    if( target === 'download'){
+                        window.main.view.adminView.excelDownload();
+                    }
+                    else if( target === 'thisWeek'){
+                        window.main.view.adminView.setThisWeek();
+
+                    }
+                    else if( target === 'thisMonth'){
+                        window.main.view.adminView.setThisMonth();
+                    }
+                    else if( target === 'lastMonth'){
+                        window.main.view.adminView.setLastMonth();
+                    }
+                },
+                onChange:  function(event){
+                    var target = event.target;
+                    if(target === 'locatation'){
+                        var deviceVal = $('input[name=location]').val();
+                    }
+                    else if( target === 'startDate' || target === 'endDate' ){
+                        window.main.view.adminView.dateCheck();       
+                    }
+                }             
+            }, // end form
+            grid: {
+                name:'upsErrorGrid',
+                recid: "id",
+                show: { footer: true },
+                columnGroups: [
+                    { caption: '', span: 2 },
+                    { caption: '보조 전원장치', span: 3 },
+                    { caption: '전원 상태', span: 2 },
+                    { caption: '네트워크', span: 3 }
+                ],        
+                columns: [                
+                    { field: 'status', caption: '상태', size: '0%', attr: "align=left"},
+                    { field: 'location', caption: '설치위치(상세설명)', size: '10%', attr: "align=left"},
+                    { field: 'blackout_time', caption: '보조 전원 사용시작', size: '10%', attr: "align=right"},
+                    { field: 'batteryUsed_time', caption: '사용시간', size: '8%', attr: "align=right" },
+                    { field: 'discharge_time', caption: '배터리방전', size: '10%', attr: "align=right" },
+                    { field: 'power_restore_time', caption: '복구', size: '10%', attr: "align=right"},
+                    { field: 'ups_delay_time', caption: '장애 누적시간', size: '8%', attr: "align=right"},
+                    { field: 'error_time', caption: '장애 발생', size: '10%', attr: "align=right"},
+                    { field: 'network_restore_time', caption: '복구', size: '10%', attr: "align=right"},
+                    { field: 'network_delay_time', caption: '장애 누적시간', size: '8%', attr: "align=right"}
+                ],
+                records: undefined
+            } // end grid
+		},
+		initialize: function () {
+			console.log('upsError.js');
+            this.$el.html(upsError)
+            this.render();
+            this.upsBinding();
+
+        },
+        events: {
+		},
+        render: function (){
+            var _this = this;
+            var formOption = _this.config.form;
+            _this.$el.find('#upsError_form').w2form(formOption);
+            var gridOption = _this.config.grid;
+            _this.$el.find('#upsError_grid').w2grid(gridOption);
+
+            
+            _this.initForm();
+            _this.initGrid();
+        },
+        upsBinding: function(){
+            var _this = this;
+            var _ups = window.main.view.upsData;
+            for(i in _ups){
+                _ups[i]['w2ui']={};
+                _ups[i]['w2ui']['children']=[];
+            }
+            _this.upsList = _ups;
+     
+        },
+        initForm: function(){
+            var _this = this;
+            _this.$el.find('.w2ui-field:nth-child(1)').css('display','none');
+            _this.$el.find('.w2ui-field:nth-child(4)').css('display','none');
+
+            
+            var toDate = _this.getToDay();
+            _this.$el.find('input[name=startDate]').val(toDate);
+            _this.$el.find('input[name=endDate]').val(toDate);
+            _this.$el.find('input[name=endDate]').w2tag();
+            _this.$el.find('input[name=endDate]').removeClass('w2ui-error');
+            _this.$el.find('#search-btn').prop('disabled',false);
+            _this.$el.find('#download-btn').prop('disabled', true);
+
+            _this.$el.find('.date-setting').find('.w2ui-btn').removeClass('w2ui-btn-blue');
+
+            setTimeout(function(){
+                _this.$el.find('input[name=location]').val('전체');
+           }, 200);
+
+
+        },
+        initGrid: function(){
+            var _this =this;
+            var gridName = _this.config.grid['name'];
+           window.w2ui[gridName].hideColumn('status');
+           window.w2ui[gridName].render();
+
+        },
+        setInitupsList: function(){
+            var _this = this;
+            var _upsList = _this.upsList;
+            for( i in _upsList){
+                _upsList[i]['w2ui']['children']=[];
+            }
+        },
+        search: function(obj){
+            var _this =this;
+            _this.setInitupsList();
+            var model = new ErrorModel();
+            model.url += '/search';
+            model.set(obj);
+            model.save({}, {
+                success: function(model, response){
+                    var upsList = _this.upsList;
+                    
+                    var result = response;
+                    for( i in result) {
+                        var _blackoutTime = result[i]['blackout_time'];
+                        var _dischargeTime = result[i]['discharge_time'];
+                        var _restoreTime = result[i]['restore_time'];
+                        var _errorTime = result[i]['error_time'];
+                        var _upsIndex = result[i]['ups_idx'];
+                        var errorType = result[i]['error_type'];
+                       // 정전일 경우
+                       if ( errorType == 1 ){
+                            // 사용시간(batteryUsed_time)
+                            // var fromDate = new Date(_blackoutTime);
+                            // var toDate = _restoreTime ? new Date(_restoreTime) : new Date();
+        
+                            // periodTime = toDate.getTime()-fromDate.getTime();
+                            // pDay = periodTime / (60*60*24*1000); 
+                            // strDay = Math.floor(pDay); // 일
+                            // pHour = (periodTime-(strDay * (60*60*24*1000))) / (60*60*1000);
+                            // strHour = Math.floor(pHour);
+                            // strMinute = Math.floor((periodTime - (strDay * (60*60*24*1000)) - (strHour * (60*60*1000))) / (60*1000));
+                            // var _batteryUsedTime = '<p style="color:#516173">'+strDay + " 일 " + strHour + " 시간 " + strMinute +'분</p>';
+                            // result[i]['batteryUsed_time'] = _batteryUsedTime;
+
+                            // 함수형
+                           var  _batteryUsedTime =_this.periodTime(_blackoutTime, _restoreTime);
+                           if(_batteryUsedTime != 0){
+                               result[i]['batteryUsed_time'] = '<p style="color:#516173">'+_batteryUsedTime+'</p>';
+                           } else {
+                               result[i]['batteryUsed_time'] = 0;
+
+                           }
+
+                            // 보조전원 사용시작(blackout_time)                            
+                            _blackoutTime = _blackoutTime.substr(0,_blackoutTime.indexOf(':',14));
+                            _blackoutTime = _blackoutTime.replace('T', ' | ');
+                            result[i]['blackout_time'] = '<p style="color:#516173">'+_blackoutTime+'</p>';
+
+                            // 복구(power_restore_time)
+                            // if(_restoreTime){
+                            //     _restoreTime = _restoreTime.substr(0,_restoreTime.indexOf(':',14));
+                            //     _restoreTime = _restoreTime.replace('T', ' | ');
+                            //     result[i]['power_restore_time'] = '<p style="color:#1ABA00">'+_restoreTime+'</p>';
+                            // } else {
+                            //     result[i]['power_restore_time'] = '<p style="color:#1ABA00">미복구</p>';
+                            // }
+
+                       }
+                       else if(errorType == 2 ){   
+                           
+                           var _dischargeTime = result[i]['discharge_time'];
+                           // 사용시간(batteryUsed_time)
+                        //    var fromDate = new Date(_blackoutTime);
+                        //    var toDate = new Date(_dischargeTime);
+                        //    periodTime = toDate.getTime()-fromDate.getTime();
+                        //    pDay = periodTime / (60*60*24*1000); 
+                        //    strDay = Math.floor(pDay); // 일
+                        //    pHour = (periodTime-(strDay * (60*60*24*1000))) / (60*60*1000);
+                        //    strHour = Math.floor(pHour);
+                        //    strMinute = Math.floor((periodTime - (strDay * (60*60*24*1000)) - (strHour * (60*60*1000))) / (60*1000));
+                        //    var _batteryUsedTime = '<p style="color:#516173">'+strDay + " 일 " + strHour + " 시간 " + strMinute +'분</p>';
+                        //    result[i]['batteryUsed_time'] = _batteryUsedTime;
+                           
+                           // 함수형
+                           var  _batteryUsedTime =_this.periodTime(_blackoutTime, _dischargeTime);
+                           result[i]['batteryUsed_time'] = '<p style="color:#516173">'+_batteryUsedTime+'</p>';
+                           
+                           // 보조전원 사용시작(blackout_time)                            
+                           _blackoutTime = _blackoutTime.substr(0,_blackoutTime.indexOf(':',14));
+                           _blackoutTime = _blackoutTime.replace('T', ' | ');
+                           result[i]['blackout_time'] = '<p style="color:#516173">'+_blackoutTime+'</p>';
+                           
+                            // 장애 누적시간(ups_delay_time)
+                            // var delayFromDate = new Date(_dischargeTime);
+                            // var delayToDate = _restoreTime ? new Date(_restoreTime) : new Date();
+                            // delay_periodTime = delayToDate.getTime()-delayFromDate.getTime();
+                            // delay_pDay = delay_periodTime / (60*60*24*1000); 
+                            // delay_strDay = Math.floor(delay_pDay); // 일
+                            // delay_pHour = (delay_periodTime-(delay_strDay * (60*60*24*1000))) / (60*60*1000);
+                            // delay_strHour = Math.floor(delay_pHour);
+                            // delay_strMinute = Math.floor((delay_periodTime - (delay_strDay * (60*60*24*1000)) - (delay_pHour * (60*60*1000))) / (60*1000));
+
+
+                            // 함수형
+                           var  delayTime =_this.periodTime(_dischargeTime, _restoreTime);
+                            
+                           if(delayTime != 0){
+                               result[i]['ups_delay_time'] = '<p style="color:#516173">'+delayTime+'</p>';
+                               // 네트워크 장애 누적시간(network_delay_time)
+                               result[i]['network_delay_time'] = '<p style="color:#516173">'+delayTime+'</p>';
+                           } else {
+                            result[i]['ups_delay_time'] = 0;
+                            // 네트워크 장애 누적시간(network_delay_time)
+                            result[i]['network_delay_time'] = 0;
+                           }
+                      
+
+                           
+                            // 배터리방전(discharge_time)
+                            _dischargeTime = _dischargeTime.substr(0,_dischargeTime.indexOf(':',14));
+                            _dischargeTime = _dischargeTime.replace('T', ' | ');
+                            result[i]['discharge_time'] = '<p style="color:#FF0000">'+_dischargeTime+'</p>'; 
+
+                            // 복구(power_restore_time)
+                            if(_restoreTime){
+                                _restoreTime = _restoreTime.substr(0,_restoreTime.indexOf(':',14));
+                                _restoreTime = _restoreTime.replace('T', ' | ');
+                                result[i]['power_restore_time'] = '<p style="color:#1ABA00">'+_restoreTime+'</p>';
+                                result[i]['network_restore_time'] = '<p style="color:#1ABA00">'+_restoreTime+'</p>';
+
+                            } else {
+                                result[i]['power_restore_time'] = '<p style="color:#1ABA00">미복구</p>';
+                                result[i]['network_restore_time'] = '<p style="color:#1ABA00">미복구</p>';
+
+                            }
+
+
+                              // 장애발생(error_time)
+                              _errorTime = _errorTime.substr(0,_errorTime.indexOf(':',14));
+                              _errorTime = _errorTime.replace('T', ' | ');
+                              result[i]['error_time'] = '<p style="color:#FF0000">'+_errorTime+'</p>';  
+
+                       }
+                       else if(errorType === 3){
+                            // error_time
+                            // network_restore_time
+                            // network_delay_time                             
+                            var errorTime= result[i]['error_time'];
+                            // 장애 누적시간(network_delay_time)
+                            // var fromDate = new Date(_errorTime);
+                            // var toDate = _restoreTime ? new Date(_restoreTime) : new Date();
+                            // periodTime = toDate.getTime()-fromDate.getTime();
+                            // pDay = periodTime / (60*60*24*1000); 
+                            // strDay = Math.floor(pDay); // 일
+                            // pHour = (periodTime-(strDay * (60*60*24*1000))) / (60*60*1000);
+                            // strHour = Math.floor(pHour);
+                            // strMinute = Math.floor((periodTime - (strDay * (60*60*24*1000)) - (strHour * (60*60*1000))) / (60*1000));
+                            // var _delayTime = '<p style="color:#516173">'+strDay + " 일 " + strHour + " 시간 " + strMinute +'분</p>';
+                            // result[i]['network_delay_time'] = _delayTime;
+
+                              // 함수형
+                                var  delayTime =_this.periodTime(_errorTime, _restoreTime);
+                                if(delayTime != 0){
+                                    result[i]['network_delay_time'] = '<p style="color:#516173">'+delayTime+'</p>';
+                                } else {
+                                    result[i]['network_delay_time'] = 0;
+
+                                }
+                              // 장애발생(error_time)
+                              errorTime = String(errorTime);
+                              errorTime = errorTime.substr(0,errorTime.indexOf(':',14));
+                              errorTime = errorTime.replace('T', ' | ');
+                              result[i]['error_time'] = '<p style="color:#FF0000">'+errorTime+'</p>';  
+
+                             // 복구(network_restore_time)
+                             if(_restoreTime){
+                                _restoreTime = _restoreTime.substr(0,_restoreTime.indexOf(':',14)) || '미복구';
+                                _restoreTime = _restoreTime.replace('T', ' | ') || '미복구';
+                                result[i]['network_restore_time'] = '<p style="color:#1ABA00">'+_restoreTime+'</p>';
+                            } else {
+                                result[i]['network_restore_time'] = '<p style="color:#1ABA00">미복구</p>';
+                            }
+                       }
+
+                        for( j in upsList){
+                            if(_upsIndex === upsList[j]['device_idx']){
+                                if(result[i]['batteryUsed_time'] || result[i]['ups_delay_time']){
+                                    console.log(result[i]['ups_delay_time'] ,' //result[i][batteryUsed_time]->',result[i]['batteryUsed_time'])
+                                    result[i]['location'] = upsList[j]['location'];
+                                    upsList[j]['w2ui']['children'].push(result[i]);
+
+                                }
+
+                            }
+                            
+                        }
+                    }
+                     _this.recordUpdate(result);
+
+                },
+                error: function(){
+
+                }
+            });
+
+        },
+        periodTime: function(startDate, endDate){
+            var fromDate = new Date(startDate);
+            var toDate =endDate ? new Date(endDate):new Date;
+
+            periodTime = toDate.getTime()-fromDate.getTime();
+            pDay = periodTime / (60*60*24*1000); 
+            strDay = Math.floor(pDay); // 일
+            pHour = (periodTime-(strDay * (60*60*24*1000))) / (60*60*1000);
+            strHour = Math.floor(pHour);
+            strMinute = Math.floor((periodTime - (strDay * (60*60*24*1000)) - (strHour * (60*60*1000))) / (60*1000));
+            sec = Math.floor((periodTime % (1000 * 60)) / 1000);
+
+            var periodDate = '';
+            if( strDay != 0 ){
+                periodDate = strDay + " 일 " + strHour + " 시간 " + strMinute +'분';
+            }
+            else if( strDay == 0 && strHour != 0){
+                periodDate = strHour + " 시간 " + strMinute +'분';
+            }
+            else if( strDay == 0 && strHour == 0 && strMinute !=0  ){
+                periodDate = strMinute +'분';
+            }
+            else if(  strDay == 0 && strHour == 0 && strMinute ==0 && sec !=0 ){
+                //periodDate = sec+'초';
+                periodDate = 0;
+            }
+          
+
+            return periodDate;
+        },
+        recordUpdate: function(result){
+            var _this = this;
+            var records = result;
+            var upsList = _this.upsList;
+            var tempRecord = [];
+
+            for( i in upsList){
+                var _childrenLeng = upsList[i]['w2ui']['children'].length;
+                if(_childrenLeng > 0){
+                    var obj = {};
+                    obj["id"] = upsList[i]["id"];
+                    obj["location"] = upsList[i]["location"];
+                    obj['w2ui'] = upsList[i]['w2ui'];
+
+                    tempRecord.push(obj);
+                }
+
+            }
+            var gridName = _this.config.grid['name'];
+            window.w2ui[gridName].records =tempRecord;
+            window.w2ui[gridName].render();
+
+            var _tempRecordLeng = tempRecord.length;
+            if(_tempRecordLeng > 0){
+                _this.$el.find('#download-btn').prop('disabled', false);
+           
+            } else {
+                _this.$el.find('#download-btn').prop('disabled', true);
+
+            }
+            var date = new Date();
+            var toYear = date.getFullYear();
+            var tempMonth = date.getMonth()+1;
+            var toMonth = tempMonth >= 10 ? tempMonth : '0'+tempMonth;
+            var tempDate = date.getDate();
+            var toDate = tempDate >= 10 ? tempDate : '0'+tempDate;
+
+            var toHour = date.getHours() >= 10 ? date.getHours() : '0'+date.getHours();
+            var toMinute = date.getMinutes() >= 10 ? date.getMinutes() : '0'+date.getMinutes();
+            var toSec = date.getSeconds() >= 10 ? date.getSeconds() : '0'+date.getSeconds();
+
+            var currentDate = toYear+'-'+toMonth+'-'+toDate+' '+toHour+':'+toMinute+':'+toSec;
+
+            $('.w2ui-footer-left').text(currentDate);
+            window.w2ui[gridName].on('refresh:after', function (event) {
+                $('.w2ui-footer-left').text(currentDate);
+            });
+            
+        },
+        getToDay: function(){
+            var date = new Date();
+            var toYear = date.getFullYear();
+            var tempMonth = date.getMonth()+1;
+            var toMonth = tempMonth >= 10 ? tempMonth : '0'+tempMonth;
+            var tempDate = date.getDate();
+            var toDate = tempDate >= 10 ? tempDate : '0'+tempDate;
+
+            var toDays = toYear+'/'+toMonth+'/'+toDate;
+
+            return toDays;
+        },
+        setThisWeek: function(){
+            var _this = this;
+            var $targetBtn = _this.$el.find('#thisWeek-btn'); 
+            var _hasClaz = $targetBtn.hasClass('w2ui-btn-blue');
+            var _hasClazSiblings = $targetBtn.siblings().hasClass('w2ui-btn-blue');
+            var _getToDay = _this.getToDay();
+            if(_hasClaz){
+                $targetBtn.removeClass('w2ui-btn-blue');
+                _this.$el.find('input[name=startDate]').val(_getToDay);
+                _this.$el.find('input[name=endDate]').val(_getToDay);
+            } else {
+                $targetBtn.addClass('w2ui-btn-blue');
+                if(_hasClazSiblings){
+                    $targetBtn.siblings().removeClass('w2ui-btn-blue');
+                }
+                var currentDay = new Date();  
+                var theYear = currentDay.getFullYear();
+                var theMonth = currentDay.getMonth();
+                var theDate  = currentDay.getDate();
+                var theDayOfWeek = currentDay.getDay();
+                 
+                var thisWeek = [];
+                 
+                for(var i=1; i<8; i++) {
+                  var resultDay = new Date(theYear, theMonth, theDate + (i - theDayOfWeek));
+                  var yyyy = resultDay.getFullYear();
+                  var mm = Number(resultDay.getMonth()) + 1;
+                  var dd = resultDay.getDate();
+                 
+                  mm = String(mm).length === 1 ? '0' + mm : mm;
+                  dd = String(dd).length === 1 ? '0' + dd : dd;
+                 
+                  thisWeek[i] = yyyy + '/' + mm + '/' + dd;
+                }
+                _this.$el.find('input[name=startDate]').val(thisWeek[1]);
+                _this.$el.find('input[name=endDate]').val(thisWeek[7]);       
+
+            }
+        },
+        setThisMonth: function(){
+            var _this = this;
+            var $targetBtn = _this.$el.find('#thisMonth-btn'); 
+            var _hasClaz = $targetBtn.hasClass('w2ui-btn-blue');
+            var _hasClazSiblings = $targetBtn.siblings().hasClass('w2ui-btn-blue');
+            var _getToDay = _this.getToDay();
+            if(_hasClaz){
+                $targetBtn.removeClass('w2ui-btn-blue');
+                _this.$el.find('input[name=startDate]').val(_getToDay);
+                _this.$el.find('input[name=endDate]').val(_getToDay);
+            } else {
+                $targetBtn.addClass('w2ui-btn-blue');
+                if(_hasClazSiblings){
+                    $targetBtn.siblings().removeClass('w2ui-btn-blue');
+                }
+                var date = new Date();
+                var thisYear = date.getFullYear();
+                var tempMonth = date.getMonth()+1;
+                var thisMonth = tempMonth>= 10 ? tempMonth : '0'+tempMonth;
+                var thisDate = '01';
+    
+                var startDate = thisYear+'/'+thisMonth+'/'+thisDate;
+                var endDate = _getToDay;
+
+                _this.$el.find('input[name=startDate]').val(startDate);
+                _this.$el.find('input[name=endDate]').val(endDate);
+            }
+            
+
+        },
+        setLastMonth: function(){
+            var _this = this;
+            var $targetBtn = _this.$el.find('#lastMonth-btn'); 
+            var _hasClaz = $targetBtn.hasClass('w2ui-btn-blue');
+            var _hasClazSiblings = $targetBtn.siblings().hasClass('w2ui-btn-blue');
+            var _getToDay = _this.getToDay();
+            if(_hasClaz){
+                $targetBtn.removeClass('w2ui-btn-blue');
+                _this.$el.find('input[name=startDate]').val(_getToDay);
+                _this.$el.find('input[name=endDate]').val(_getToDay);
+            } else {
+                $targetBtn.addClass('w2ui-btn-blue');
+                if(_hasClazSiblings){
+                    $targetBtn.siblings().removeClass('w2ui-btn-blue');
+                }
+                var firstDay = new Date();
+                firstDay.setMonth( firstDay.getMonth() - 1 ); 
+                firstDay.setDate(1);
+
+                var firstYear = firstDay.getFullYear();
+                var tempFirstMonth = firstDay.getMonth()+1;
+                var firstMonth = tempFirstMonth >= 10 ? tempFirstMonth : '0'+tempFirstMonth;
+                var tempFirstDate = firstDay.getDate();
+                var firstDate = tempFirstDate >= 10 ? tempFirstDate : '0'+tempFirstDate;
+                var startLastDate = firstYear+'/'+firstMonth+'/'+firstDate; 
+
+                var endDay = new Date();
+                endDay.setMonth( endDay.getMonth() ); 
+                endDay.setDate(0);
+
+                var endYear = endDay.getFullYear();
+                var tempEndMonth = endDay.getMonth()+1;
+                var endMonth = tempEndMonth >= 10 ? tempEndMonth : '0'+tempEndMonth;
+                var tempEndDate = endDay.getDate();
+                var endDate = tempEndDate >= 10 ? tempEndDate : '0'+tempEndDate;
+                var endLastDate = endYear+'/'+endMonth+'/'+endDate; 
+
+                _this.$el.find('input[name=startDate]').val(startLastDate);
+                _this.$el.find('input[name=endDate]').val(endLastDate);
+            }        
+            
+        },
+        dateCheck: function(){
+            var _this =this;
+            var startDate = _this.$el.find('input[name=startDate]').val();
+            var endDate = _this.$el.find('input[name=endDate]').val(); 
+            
+            if(startDate > endDate){
+                _this.$el.find('input[name=endDate]').addClass('w2ui-error');
+                _this.$el.find('input[name=endDate]').w2tag('시작일 이후의 일자를 <br> 선택하세요.');
+                _this.$el.find('#search-btn').prop('disabled',true);
+                
+            } else {
+                _this.$el.find('input[name=endDate]').removeClass('w2ui-error');
+                _this.$el.find('input[name=endDate]').w2tag();
+                _this.$el.find('#search-btn').prop('disabled',false);
+            }
+
+        },
+        excelDownload: function(obj){
+            location.replace('/ups/error/excelDown');      
+          
+        },
+		destroy: function () {
+			var _this = this;
+			var gridName = _this.config.grid['name'];
+			var formName = _this.config.form['name'];
+
+			if (window.w2ui.hasOwnProperty(gridName)) {
+				window.w2ui[gridName].destroy();
+			}
+			if (window.w2ui.hasOwnProperty(formName)) {
+				window.w2ui[formName].destroy();
+			}
+			this.undelegateEvents();
+		},
+	});
+});

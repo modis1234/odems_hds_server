@@ -1,0 +1,153 @@
+.circle canvas{
+    width: 72px;
+    height: 72px;
+    margin-top: 3px;
+}
+.circle {
+    height: 0px;
+}
+
+span.bettery-per {
+    position: relative;
+    left: -2px;
+    bottom: 60px;
+    font-size: 14px;
+    text-align: center;
+    padding-bottom: 2px;
+}
+span.bettery-per .fas {
+    font-size: 24px;
+    margin-bottom: 4px;
+}
+
+/* 헤더- 디바이스 버튼 인터렉션 */
+.devIcon.devInvisible{
+    display: none;
+}
+
+.devIcon{
+    display: block;
+}
+
+.show{
+    display: block !important;
+}
+
+/* 로그 */
+.logList {
+    height: 150px;
+    overflow: auto;
+}
+
+/* photoBox
+.photoBox.show {
+    display: block;
+}
+
+.photoBox {
+    display: block;
+} */
+
+/* map-device Icon 장애 시만 아이콘 보이게 */
+.mapIcon{
+    display: none;
+}
+
+.mapIcon.demer {
+    display: block;
+}   
+
+.mapIcon.devShow {
+    display: block !important;
+}  
+
+/* hearder 버튼 클릭 표현 */
+/* interaction.css:2 아래에 붙여넣기 */
+.devcie-toggle-box.active{
+    background: #012d4a;
+    animation: btn 0.3s ease 0s 1 forwards;
+}
+.upsLocate-toggle-box.active{
+    background: #012d4a;
+    animation: btn 0.3s ease 0s 1 forwards;
+}
+
+/* 전체화면 팝업 */
+.fs_checkPop {
+    height: 210px;
+    width: 341px;
+    position: absolute;
+    z-index: 999;
+    background-color: #000;
+    top: 36%;
+    left: 41%;
+    border-radius: 10px;
+    border: 1px solid #6d6a6a;
+}
+
+.hearder_box {
+    background-color: #616161;
+    width: 100%;
+    height: 22%;
+    text-align: center;
+    border-radius: 5px 5px 0px 0px;
+    display: table;
+    padding-top: 10px;
+}
+.hearder_box > span {
+    font-size: 19px;
+    letter-spacing: 2px;
+}
+.body_box {
+    height: 55%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
+.body_top > span {
+    font-size: 18px;
+}
+.body_top {
+    width: 100%;
+    height: 50%;
+}
+.body_bottom {
+    width: 100%;
+    height: 50%;
+}
+.body_bottom > .check-btn {
+    width: 69px;
+    height: 42px;
+    border-radius: 4px;
+    background-color: #2E2E2E;
+    font-size: 16px;
+}
+
+.body_bottom > .check-btn:hover {
+    cursor: pointer;
+}
+
+.body_bottom >.check-btn:nth-child(2) {
+    margin-left: 15px;
+}
+
+
+/* 대시보드 모바일 테스트 */
+@media screen and (max-width: 1440px) {
+    .net {
+        width: 53px;
+    }
+    .ac {
+        width: 39px;
+        margin-left: 16px !important;
+    }
+}
+
+@media screen and (max-height: 969px) {
+    body {
+        overflow: hidden;
+    }
+
+}
+
+

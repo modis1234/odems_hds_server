@@ -1,0 +1,4 @@
+<div class="contents-box">
+    <div class="left-contents" id="manager_grid"></div>
+    <div class="right-contents" id="manager_form"></div>
+</div>

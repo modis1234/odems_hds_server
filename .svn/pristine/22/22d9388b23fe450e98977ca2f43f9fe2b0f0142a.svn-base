@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="/plugins/w2ui/w2ui-1.5.rc1.min.css">
+    <script src="/plugins/jquery/jquery-3.4.1.js"></script>
+    <script src="/plugins/w2ui/w2ui-1.5.rc1.min.js"></script> -->
+
+    <script type="text/javascript" data-main="../init" src="/plugins/require/require.min.js"></script>
+    <title>대곡-소사</title>
+<link href="./stylesheets/css/common.css" rel="stylesheet" type="text/css">
+<link href="./stylesheets/css/layout.css" rel="stylesheet" type="text/css">
+<link href="./stylesheets/css/component.css" rel="stylesheet" type="text/css">
+<link href="./stylesheets/css/animate.css" rel="stylesheet" type="text/css">
+<link href="./stylesheets/css/all.css" rel="stylesheet" type="text/css">
+<link href="./stylesheets/css/interaction.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+	<header>
+		<div class="logo"><img src="./images/hdLOGO.png"></div>
+		<div class="tit">대곡-소사 복선전철 민간투자 시설사업 제2공구 <span>유지관리 통합관제</span> 시스템</div>
+		<div class="headerBtn">
+			<ul>
+				<li><i class="fas fa-server"></i><br>디바이스</li>
+				<li><i class="fas fa-map-marker-alt"></i><br>위치정보</li>
+				<li><i class="fas fa-cog"></i><br>관리자</li>
+				<li><i class="fas fa-sign-out-alt"></i><br>로그아웃</li>
+			</ul>
+		</div>
+	</header>
+	<div class="wrapper">
+		<div class="photoPOP">
+			<div class="photoBox">
+				<div class="tit">
+					<span>1. 현장입구</span> <i class="fas fa-times"></i>
+				</div>
+				<div class="imgBox">
+					<img src="./images/ups_1_img.png">
+				</div>
+			</div>
+		</div>
+		<div id="leftBox">
+			<div class="mapArea">
+				<!-- 맵 포인트 넘버 시작 -->
+				<div class="upsPoint ups_1">1</div>
+				<div class="upsPoint ups_2">2</div>
+				<div class="upsPoint ups_3">3</div>
+				<div class="upsPoint ups_4 Pemer">4</div>
+				<div class="upsPoint ups_5 Pemer">5</div>
+				<div class="upsPoint ups_6 Pemer">6</div>
+				<!-- 맵 포인트 넘버 끝 -->
+				<!-- 알람팝업 시작 (6개 .pop_1 ~ 6) -->
+				<div class="pop_1 popBox">
+					<div class="line_1_x line"></div>
+					<div class="line_1_y line"></div>
+					<div class="popTit">1. 현장입구<i class="fas fa-search"></i></div>
+					<div class="popBody">
+						<div class="state">
+							<div class="nomal"></div>
+							<div class="ac">
+								<i class="fas fa-plug"></i><br><span>220 V</span>
+							</div>
+							<div class="bottom bnomal"><img src="./images/1st.png"><img src="./images/1st.png"><img src="./images/1st.png"></div>
+						</div>
+						<div class="state">
+							<div class="nomal"></div>
+							<div class="net">	
+								<img src="./images/netIcon.png"><br><span>네트워크</span>
+							</div>	
+							<div class="bottom bnomal"><img src="./images/1st.png"><img src="./images/1st.png"><img src="./images/1st.png"></div>
+						</div>
+					</div>
+					<div class="popBottom">
+						담당자(정) : 박반장 010-1234-5678
+						담당자(부) : 김작업 010-4567-0000
+					</div>
+				</div>	
+				<div class="pop_2 popBox">
+					<div class="line_2_x line"></div>
+					<div class="line_2_y line"></div>
+					<div class="popTit">2. 환기구 입구<i class="fas fa-search"></i></div>
+					<div class="popBody">
+						<div class="state">
+							<div class="nomal"></div>
+							<div class="ac">
+								<i class="fas fa-plug"></i><br><span>220 V</span>
+							</div>
+							<div class="bottom bnomal"><img src="./images/1st.png"><img src="./images/1st.png"><img src="./images/1st.png"></div>
+						</div>
+						<div class="state">
+							<div class="nomal"></div>
+							<div class="net">	
+								<img src="./images/netIcon.png"><br><span>네트워크</span>
+							</div>	
+							<div class="bottom bnomal"><img src="./images/1st.png"><img src="./images/1st.png"><img src="./images/1st.png"></div>
+						</div>
+					</div>
+					<div class="popBottom">
+						담당자(정) : 박반장 010-1234-5678
+						담당자(부) : 김작업 010-4567-0000
+					</div>
+				</div>
+				<div class="pop_3 popBox">
+					<div class="line_3_x line"></div>
+					<div class="line_3_y line"></div>
+					<div class="popTit">3. 환기구 지하<i class="fas fa-search"></i></div>
+					<div class="popBody">
+						<div class="state">
+							<div class="nomal"></div>
+							<div class="ac">
+								<i class="fas fa-plug"></i><br><span>220 V</span>
+							</div>
+							<div class="bottom bnomal"><img src="./images/1st.png"><img src="./images/1st.png"><img src="./images/1st.png"></div>
+						</div>
+						<div class="state">
+							<div class="nomal"></div>
+							<div class="net">	
+								<img src="./images/netIcon.png"><br><span>네트워크</span>
+							</div>	
+							<div class="bottom bnomal"><img src="./images/1st.png"><img src="./images/1st.png"><img src="./images/1st.png"></div>
+						</div>
+					</div>
+					<div class="popBottom">
+						담당자(정) : 박반장 010-1234-5678
+						담당자(부) : 김작업 010-4567-0000
+					</div>
+				</div>
+				<div class="pop_4 popBox">
+					<div class="line_4_x line"></div>
+					<div class="line_4_y line"></div>
+					<div class="popTit">4. 쉴드터널 입구<i class="fas fa-search"></i></div>
+					<div class="popBody">
+						<div class="state">
+							<div class="emer"></div>
+							<div class="ac">
+								<i class="fas fa-car-battery"></i><br><span>00 %</span>
+							</div>
+							<div class="bottom bemer"><img src="./images/2nd.png"><img src="./images/2nd.png"><img src="./images/2nd.png"></div>
+						</div>
+						<div class="state">
+							<div class="emer"></div>
+							<div class="net">	
+								<img src="./images/netIcon.png"><br><span>네트워크</span>
+							</div>	
+							<div class="bottom bemer"><img src="./images/2nd.png"><img src="./images/2nd.png"><img src="./images/2nd.png"></div>
+						</div>
+					</div>
+					<div class="popBottom">
+						담당자(정) : 박반장 010-1234-5678
+						담당자(부) : 김작업 010-4567-0000
+					</div>
+				</div>                           
+
+				
+				<div class="pop_5 popBox">
+					<div class="line_5_x line"></div>
+					<div class="line_5_y line"></div>
+					<div class="popTit">5. TBM 하행<i class="fas fa-search"></i></div>
+					<div class="popBody">
+						<div class="state">
+							<div class="chart"></div>
+							<div class="ac">
+								<i class="fas fa-car-battery"></i><br><span>52 %</span>
+							</div>
+							<div class="bottom bemer">29 min</div>
+						</div>
+						<div class="state">
+							<div class="emer"></div>
+							<div class="net">	
+								<img src="./images/netIcon.png"><br><span>네트워크</span>
+							</div>	
+							<div class="bottom bemer"><img src="./images/2nd.png"><img src="./images/2nd.png"><img src="./images/2nd.png"></div>
+						</div>
+					</div>
+					<div class="popBottom">
+						담당자(정) : 박반장 010-1234-5678
+						담당자(부) : 김작업 010-4567-0000
+					</div>
+				</div>
+				<div class="pop_6 popBox">
+					<div class="line_6_x line"></div>
+					<div class="line_6_y line"></div>
+					<div class="popTit">6. TBM 상행<i class="fas fa-search"></i></div>
+					<div class="popBody">
+						<div class="state">
+							<div class="chart"></div>
+							<div class="ac">
+								<i class="fas fa-car-battery"></i><br><span>60 %</span>
+							</div>
+							<div class="bottom bemer">98 min</div>
+						</div>
+						<div class="state">
+							<div class="nomal"></div>
+							<div class="net">	
+								<img src="./images/netIcon.png"><br><span>네트워크</span>
+							</div>	
+							<div class="bottom bnomal"><img src="./images/1st.png"><img src="./images/1st.png"><img src="./images/1st.png"></div>
+						</div>
+					</div>
+					<div class="popBottom">
+						담당자(정) : 박반장 010-1234-5678
+						담당자(부) : 김작업 010-4567-0000
+					</div>
+				</div>
+				<!-- 디바이스 아이콘 -->
+				<div class="devIcon p1-d1 dnomal"><i class="fas fa-satellite-dish"></i><span>중계기</span></div>
+				<div class="devIcon p1-c1 dnomal"><i class="fas fa-video"></i><span>CCTV</span></div>
+				<div class="devIcon p2-d1 dnomal"><i class="fas fa-satellite-dish"></i><span>중계기</span></div>
+				<div class="devIcon p2-s1 dnomal"><img src="./images/scanner_nomal.png"><span>스캐너</span></div>
+				<div class="devIcon p2-s2 demer"><img src="./images/scanner_emer.png"><span>스캐너</span></div>
+				<div class="devIcon p3-s1 dnomal"><img src="./images/scanner_nomal.png"><span>스캐너</span></div>
+				<div class="devIcon p3-s2 dnomal"><img src="./images/scanner_nomal.png"><span>스캐너</span></div>
+				<div class="devIcon p3-c1 dnomal"><i class="fas fa-video fa-flip-horizontal"></i><span>CCTV</span></div>
+				<div class="devIcon p3-c2 dnomal"><i class="fas fa-video fa-flip-horizontal"></i><span>CCTV</span></div>
+				<div class="devIcon p3-g1 dnomal"><i class="fas fa-tachometer-alt"></i><span>가스센서</span></div>
+				<div class="devIcon p4-d1 demer"><i class="fas fa-satellite-dish"></i><span>중계기</span></div>
+				<div class="devIcon p4-d2 demer"><i class="fas fa-satellite-dish "></i><span>중계기</span></div>
+				<!-- <div class="devIcon p5-w1 dnomal"><i class="fas fa-wifi"></i><span>와이파이</span></div> -->
+				<div class="devIcon p5-d1 dnomal"><i class="fas fa-satellite-dish"></i><span>중계기</span></div>
+				<!-- <div class="devIcon p6-w1 demer"><i class="fas fa-wifi"></i><span>와이파이</span></div> -->
+				<div class="devIcon p6-d1 demer"><i class="fas fa-satellite-dish"></i><span>중계기</span></div>
+								
+				<!--디바이스 아이콘 끝  -->
+
+				<div class="dataBox">
+					<div class="tit">Connect<i class="fas fa-circle"></i></div>
+					<div class="fakedata">
+						어떤데이터?
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="rightBox">
+			<div class="upxBox">
+				<ul>
+					<li>
+						<div class="Pname">1<span>현장입구</span></div>
+							<div class="state">
+								<div class="nomal"></div>
+								<div class="ac">
+									<i class="fas fa-plug"></i><br>
+									<span>220 V</span>
+								</div>
+								<div class="bottom bnomal"><img src="./images/1st.png"><img src="./images/1st.png"><img src="./images/1st.png"></div>
+							</div>
+							<div class="state">
+								<div class="nomal"></div>
+								<div class="net">	
+									<img src="./images/netIcon.png"><br>
+									<span>네트워크</span>
+								</div>	
+								<div class="bottom bnomal"><img src="./images/1st.png"><img src="./images/1st.png"><img src="./images/1st.png"></div>
+							</div>
+							<div class="devList">
+								<div class="dev">&nbsp;</div>
+								<div class="dev">&nbsp;</div>
+								<div class="dev dnomal"><i class="fas fa-satellite-dish"></i>중계기</div>
+								<div class="dev dnomal "><i class="fas fa-video"></i>CCTV</div>
+								<div class="dev">&nbsp;</div>
+								<div class="dev">&nbsp;</div>
+							</div>
+					</li>
+					<li>
+						<div class="Pname">2<span>환기구 입구</span></div>
+							<div class="state">
+								<div class="nomal"></div>
+								<div class="ac">
+									<i class="fas fa-plug"></i><br>
+									<span>220 V</span>
+								</div>
+								<div class="bottom bnomal"><img src="./images/1st.png"><img src="./images/1st.png"><img src="./images/1st.png"></div>
+							</div>
+							<div class="state">
+								<div class="nomal"></div>
+								<div class="net">	
+									<img src="./images/netIcon.png"><br>
+									<span>네트워크</span>
+								</div>	
+								<div class="bottom bnomal"><img src="./images/1st.png"><img src="./images/1st.png"><img src="./images/1st.png"></div>
+							</div>
+							<div class="devList">
+								<div class="dev">&nbsp;</div>
+								<div class="dev">&nbsp;</div>
+								<div class="dev dnomal"><i class="fas fa-satellite-dish"></i>중계기</div>
+								<div class="dev dnomal"><img src="./images/scanner_nomal.png">스캐너</div>
+								<div class="dev">&nbsp;</div>
+								<div class="dev demer"><img src="./images/scanner_emer.png">스캐너</div>
+							</div>
+					</li>
+					<li>
+						<div class="Pname">3<span>환기구 지하</span></div>
+							<div class="state">
+								<div class="nomal"></div>
+								<div class="ac">
+									<i class="fas fa-plug"></i><br>
+									<span>220 V</span>
+								</div>
+								<div class="bottom bnomal"><img src="./images/1st.png"><img src="./images/1st.png"><img src="./images/1st.png"></div>
+							</div>
+							<div class="state">
+								<div class="nomal"></div>
+								<div class="net">	
+									<img src="./images/netIcon.png"><br>
+									<span>네트워크</span>
+								</div>	
+								<div class="bottom bnomal"><img src="./images/1st.png"><img src="./images/1st.png"><img src="./images/1st.png"></div>
+							</div>
+							<div class="devList">
+								<div class="dev dnomal"><i class="fas fa-video"></i>CCTV</div>
+								<div class="dev dnomal"><img src="./images/scanner_nomal.png">스캐너</div>
+								<div class="dev dnomal"><i class="fas fa-video"></i>CCTV</div>
+								<div class="dev dnomal"><img src="./images/scanner_nomal.png">스캐너</div>
+								<div class="dev">&nbsp;</div>
+								<div class="dev dnomal"><i class="fas fa-tachometer-alt"></i>가스센서</div>
+							</div>
+					</li>
+					<li>
+						<div class="Pname">4<span>쉴드터널 입구</span></div>
+							<div class="state">
+								<div class="emer"></div>
+								<div class="ac">
+									<i class="fas fa-car-battery"></i><br>
+									<span>00 %</span>
+								</div>
+								<div class="bottom bemer"><img src="./images/2nd.png"><img src="./images/2nd.png"><img src="./images/2nd.png"></div>
+							</div>
+							<div class="state">
+								<div class="emer"></div>
+								<div class="net">	
+									<img src="./images/netIcon.png"><br>
+									<span>네트워크</span>
+								</div>	
+								<div class="bottom bemer"><img src="./images/2nd.png"><img src="./images/2nd.png"><img src="./images/2nd.png"></div>
+							</div>
+							<div class="devList">
+								<div class="dev demer"><i class="fas fa-satellite-dish"></i>중계기</div>
+								<div class="dev">&nbsp;</div>
+								<div class="dev demer"><i class="fas fa-satellite-dish"></i>중계기</div>
+								<div class="dev">&nbsp;</div>
+								<div class="dev">&nbsp;</div>
+								<div class="dev">&nbsp;</div>
+							</div>
+					</li>
+					<li>
+						<div class="Pname">5<span>TBM 하행</span></div>
+							<div class="state">
+								<div class="chart"></div>
+								<div class="ac">
+									<i class="fas fa-car-battery"></i><br>
+									<span>52 %</span>
+								</div>
+								<div class="bottom">29 min</div>
+							</div>
+							<div class="state">
+								<div class="emer"></div>
+								<div class="net">	
+									<img src="./images/netIcon.png"><br>
+									<span>네트워크</span>
+								</div>	
+								<div class="bottom bemer"><img src="./images/2nd.png"><img src="./images/2nd.png"><img src="./images/2nd.png"></div>
+							</div>
+							<div class="devList">
+								<div class="dev dnomal"><i class="fas fa-satellite-dish"></i>중계기</div>
+								<div class="dev dnomal"><i class="fas fa-video"></i>CCTV</div>
+								<div class="dev dnomal"><i class="fas fa-wifi"></i>Wi-Fi</div>
+								<div class="dev dnomal"><i class="fas fa-video"></i>CCTV</div>
+								<div class="dev dnomal"><i class="fas fa-wifi"></i>Wi-Fi</div>
+								<div class="dev dnomal"><i class="fas fa-tachometer-alt"></i>가스센서</div>
+							</div>
+					</li>
+					<li>
+						<div class="Pname">6<span>TBM 상행</span></div>
+							<div class="state">
+								<div class="chart"></div>
+								<div class="ac">
+									<i class="fas fa-car-battery"></i><br>
+									<span>60 %</span>
+								</div>
+								<div class="bottom">98 min</div>
+							</div>
+							<div class="state">
+								<div class="nomal"></div>
+								<div class="net">	
+									<img src="./images/netIcon.png"><br>
+									<span>네트워크</span>
+								</div>	
+								<div class="bottom bnomal"><img src="./images/1st.png"><img src="./images/1st.png"><img src="./images/1st.png"></div>
+							</div>
+							<div class="devList">
+								<div class="dev dnomal"><i class="fas fa-satellite-dish"></i>중계기</div>
+								<div class="dev dnomal"><i class="fas fa-video"></i>CCTV</div>
+								<div class="dev demer"><i class="fas fa-wifi"></i>Wi-Fi</div>
+								<div class="dev dnomal"><i class="fas fa-video"></i>CCTV</div>
+								<div class="dev demer"><i class="fas fa-wifi"></i>Wi-Fi</div>
+								<div class="dev dnomal"><i class="fas fa-tachometer-alt"></i>가스센서</div>
+							</div>
+					</li>
+					
+				
+
+					
+				</ul>
+			</div>
+
+			<div id="netBox">network</div>
+		</div>
+	</div>
+	
+</body>
+</html>

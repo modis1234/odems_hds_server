@@ -1,0 +1,99 @@
+/* wrapper layout */
+#admin-wrapper {
+    box-sizing:border-box; 
+    height: 920px;
+}
+#ad-leftBox {
+    height: 100%;          
+    width: 15%;
+    float: left;
+    width: 12.4%;
+}
+div#ad-rightBox {
+    width: 1680px;
+    height: 100%;
+    float: left;
+    background-color: #fff;
+    border-left: 1px solid #bdbcbc;
+}
+
+/* header css */
+#admin-header {
+    background-color: #fff;
+    height: 50px;
+    border-bottom: 1px solid #bdbcbc;
+}
+#admin-header .ad-tit {
+    font-size: 19px;
+    color: #2e2e2e;
+    padding-left: 120px;
+    float: left;
+    margin-top: 10px;
+}
+#admin-header  .ad-tit > span {
+    color: #036EB8;
+}
+/* .ad-logo > img {
+    width: 109px;
+    height: 24px;
+} */
+#admin-header  .ad-logo {
+    padding-left: 19px;
+    float: left;
+    margin-top: 10px;
+}
+
+/*#### menu ####*/
+/* 메뉴 상단 버튼 */
+.menu-top {
+    width: 100%;
+    height: 13%;    
+    background-color: #EDF1F6;
+    text-align: center;
+}
+.menu-top > div {
+    margin-top: 23px;
+}
+.menu-btn {
+    width: 60px;
+    height: 60px;
+    display: inline-block;
+    background: #036eb8;
+    text-align: center;
+    margin-left: 12px;
+    border-radius: 5%;
+    font-size:25px;
+}
+.letfButton {
+    float: left;
+    width: 50%;
+}
+.rightButton {
+    width: 50%;
+    float: right;
+}
+span.btn-title {
+    color: #000;
+    padding-left: 12px;
+}
+button#logout-btn {
+    margin-left: 0px;
+    margin-right: 5px;
+}
+.rightButton span.btn-title {
+    padding-left: 0px;
+    padding-right: 6px;
+}
+
+
+/* 메뉴 하단 */
+#munu-bottom {
+    width: 100%;
+    height: 87%;    
+    background-color: #edf0f5;
+}
+
+/* w2util - calendar */
+.w2ui-jump-year, .w2ui-jump-month {
+    color: #2e2e2e;
+}

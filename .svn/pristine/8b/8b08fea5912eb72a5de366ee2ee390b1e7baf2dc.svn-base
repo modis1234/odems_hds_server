@@ -1,0 +1,141 @@
+.contents-box  * {
+    color: #000000;
+}
+
+.contents-box {
+    margin-top: 123px;
+    margin-left: 12px;
+}
+.left-contents {
+    float: left;
+}
+.right-contents {
+    float: left;
+}
+
+/* 담당자 등록 */
+div#manager_grid {
+    height: 320px;
+    width: 817px;
+}
+div#manager_form {
+    height: 318px;
+    width: 363px;
+    margin-left: 21px;
+}
+
+/* 수신자 등록 */
+div#receiver_grid {
+    height: 603px;
+    width: 819px;
+}
+div#receiver_form {
+    height: 246px;
+    width: 363px;
+    margin-left: 21px;
+}
+div#receiver_grid div.w2ui-col-header {
+    text-align:center;
+}
+div#receiver_form div.w2ui-column-container{
+    margin-top: 35px;
+}
+
+
+/* w2uiConfirm */
+.w2ui-centered.w2ui-confirm-msg {
+    font-size: 15px !important;
+    color: #2e2e2e;
+    font-weight: bold;
+}
+
+.w2ui-centered.w2ui-alert-msg {
+    font-size: 15px !important;
+    color: #2e2e2e;
+    font-weight: bold;
+}
+
+/* w2uitoobar */
+.w2ui-col-on-off * {
+    color: #000;
+}
+.w2ui-col-on-off tr:nth-child(4),
+.w2ui-col-on-off tr:nth-child(5),
+.w2ui-col-on-off tr:nth-child(6) {
+    display: none;
+}
+
+/* 장애이력 조회 */
+div#netError_form {
+    width: 344px;
+    height: 249px;
+}
+div#netError_grid {
+    width: 1305px;
+    height: 678px;
+    margin-left: 10px;
+}
+
+/* searchForm.html */
+.w2ui-field {
+    margin-top: 10px;
+}
+.w2ui-field>label {
+    width: 90px;
+}
+.w2ui-field>div {
+    margin-left: 101px;
+}
+.w2ui-page > div {
+    margin-top: 15px;
+}
+input#startDate, input#endDate {
+    width: 83px;
+}
+input#deviceList {
+    width: 180px;
+}
+td.menu-text {
+    color: #2e2e2e !important;
+}
+
+button#download-btn {
+    min-width: 27px;
+    height: 27px;
+    padding: 0px;
+    color: #516173;
+}
+
+button#download-btn:disabled > .fa-download {
+    color: #bdbcbc !important;
+    cursor: default;
+
+}
+button#search-btn:disabled {
+    opacity: 0.5;
+    background-image: linear-gradient(#73b6f0 0,#2391dd 100%) !important;
+    background-image: -webkit-linear-gradient(#80c0f7 0,#269df0 100%) !important;
+    color: #fff;
+}
+.w2ui-btn {
+    cursor: pointer !important;
+}
+button#download-btn:disabled {
+    color: #bdbcbc !important;
+    cursor: default !important;
+}
+.date-setting > button {
+    min-width: 50px;
+    height: 25px;
+    float: left;
+    padding: 0px;
+    margin-left: 0px;
+    margin-right: 13px;
+}
+.w2ui-field:nth-child(3) {
+    margin-top: 0px;
+}
+.w2ui-grid-data > div {
+    padding-right: 10px !important;
+    padding-left: 15px !important;
+}

@@ -1,0 +1,59 @@
+var express = require('express');
+var router = express.Router();
+var request = require('request');
+
+var servers = require('./config/servers');
+
+
+/* GET users listing. */
+router.get('/list', function(req, res, next) {
+    var geturl = servers.apisvr.url + '/api/ups/1'
+    request.get({
+            url:geturl,
+            json: true
+        }, function(error, _res, body){
+        if(!error){
+            var _upsList = _res.body;
+            res.json(_upsList);
+        }else {
+            res.send(error);
+        }
+    });
+});
+
+router.get('/device', function(req, res, next) {
+    var geturl = servers.apisvr.url + '/api/ups/device/1';
+
+    request.get({
+            url:geturl,
+            json: true
+        }, function(error, _res, body){
+        if(!error){
+            var _deviceList = _res.body;
+
+            res.json(_deviceList);
+        }else {
+            res.send(error);
+        }
+    });
+
+});
+
+// error list 호출
+router.get('/error', function(req, res, next){
+    var errorURL = servers.apisvr.url + '/api/ups/error';
+
+    request.get({
+            url:errorURL,
+            json: true
+        }, function(error, _res, body){
+        if(!error){
+            res.json(_res.body);
+        }else {
+            res.send(error);
+        }
+    });
+});
+
+
+module.exports = router;

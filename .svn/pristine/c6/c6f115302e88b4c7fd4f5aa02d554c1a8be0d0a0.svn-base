@@ -1,0 +1,279 @@
+/* 헤더 */
+header{
+	width: 1920px;
+	height: 100px;
+}
+header .logo{
+	background: none;
+	float: left;
+	padding: 11px 0 0 48px;
+}
+header .tit{
+	float: left;
+	font-size: 36px;
+	background:none;
+	line-height: 2.7;
+	padding: 0 0 0 130px;
+}
+header span{
+	color: #036eb8;
+}
+.headerBtn{
+	float: right;
+	padding: 15px;
+}
+.headerBtn li{
+	width: 70px;
+	height: 70px;
+	display: inline-block;
+	background: #036eb8;
+	text-align: center;
+	margin-left: 7px;
+	border-radius: 5%;
+	
+}
+.headerBtn li:nth-child(3){
+	background: #343434;
+}
+.headerBtn li:nth-child(4){
+	background: #343434;
+}
+.headerBtn li>i{
+	font-size: 24px;
+	line-height: 1.8;
+}
+
+
+/* UPS 리스트 */
+
+#rightBox li{
+	border: 1px solid #000;
+	margin: 8px 10px ;
+	width: 600px;
+	height: 100px;
+}
+.Pname{
+	width: 140px;
+	height: 100px;
+	background: #000;
+	font-size:24px;
+	text-align: center;
+	position: relative;
+	float: left;
+	line-height:2.5 ;
+}
+.Pname > span {
+	font-size: 20px;
+	display: block;
+	line-height: 1;
+}
+.state{
+	width: 75px;
+	height: 100px;
+	float: left;
+	margin-left: 15px;
+}
+.chart{
+	border: 1px solid #ff0000;
+    border-radius: 50%;
+    width: 68px;
+    height: 68px;
+    margin-top: 4px;
+    text-align: center;
+    position: absolute;
+}
+.ac{
+	position: absolute;
+	margin-top: 5px;
+	margin-left: 20px;
+	text-align: center;
+	background: none;
+}
+.net{
+	position: absolute;
+	margin-top: 4px;
+	margin-left: 10px;
+	text-align: center;
+	background: none;
+}
+.ac i{
+	font-size: 24px;
+	margin: 10px 0 5px ;
+}
+.state img{
+	margin-top: 10px;
+}
+
+.bottom{
+	text-align: center;
+	margin-top: 75px;
+}
+.bottom img{
+	margin-right: 5px;
+	margin-left: 4px;
+}
+.devList{ margin-top: 10px;}
+.devList .dev{
+	display: inline-block;
+	margin-left: 34px;
+	width: 90px;
+	line-height: 27px;
+}
+.devList .dev i{
+	margin-right: 10px;
+	font-size: 16px;
+}
+.devList img{
+	margin-right: 10px;
+}
+
+/* map + 알람 팝업 */
+.mapArea{
+	background:url(/images/map.png)no-repeat;
+	width: 1298px;
+	height: 975px;
+}
+.upsPoint{
+	position: absolute;
+	background: #000;
+	font-size: 16px;
+	/* padding: 2px 10px; */
+	/* border-radius: 50%; */
+	z-index: 99;
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	line-height: 1.8;
+}
+.popBox{
+	width: 210px;
+	height: 190px;
+	border: 1px solid #5d5d5d;
+	position: absolute;
+	background: #2e2e2e;
+}
+.popTit{
+	font-size: 16px;
+	background: #000;
+	padding: 8px;
+}
+.popTit > i{
+	float: right;
+	margin-top: 4px;
+	cursor: pointer;
+}
+.popBody{
+	padding: 8px 8px 1px 8px;
+	height: 100px;
+	border-bottom: 1px solid #5d5d5d;
+}
+.popBottom{
+	font-size: 12px;
+	padding: 2px;
+	letter-spacing: 1px;
+}
+
+.popBox .line{
+	border:0.5px solid #fff;
+	position: absolute;
+}
+
+/* 사진 */
+.photoPOP{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	z-index: 9999;
+	background-color: rgba(0, 0, 0, 0.9);
+}
+.photoBox{
+	position: absolute;
+	width: 1000px;
+	/* height: 400px; */
+	z-index: 999;
+	background: #000;
+	top: 50px;
+	left: 145px;
+	border: 1px solid #343434;
+	box-sizing: border-box;
+}
+.photoBox .tit{
+	background: #343434;
+	padding: 10px;
+	font-size: 20px;
+	padding: 8px;
+	margin: 5px;
+	cursor: pointer;
+}
+.photoBox .tit i{
+	float: right;
+	line-height: 1.5;
+	margin-right: 10px;
+}
+.imgBox{
+	padding: 0 5px 5px;
+}
+.imgBox img{
+	width: 100%;
+}
+
+/* 디바이스 */
+.devIcon{
+	position: absolute;
+	font-size: 16px;	
+	background: none;
+	z-index: 99;
+}
+.devIcon span{
+	visibility: hidden;
+	margin-left: 5px;
+}
+/* 데이터 박스 */
+.dataBox{
+	width: 270px;
+	height: 200px;
+	background: #000;
+	margin: 10px;
+	position: absolute;
+	opacity: 0.6;
+}
+.dataBox .tit{
+	border-bottom: 1px solid #fff;
+	padding: 10px;
+}
+.dataBox .fakedata{
+	padding: 5px;
+}
+.dataBox i{
+	float: right;
+	animation: connect 0.1s linear 0s infinite alternate ;
+}
+
+/* 네트워크 구성도 */
+#netBox .line{
+	border-bottom: 1px solid;
+	opacity: 0.3;
+	position: relative;
+
+}
+#netBox .lineVertical{
+	border-left: 1px solid;
+	opacity: 0.3;
+	position: absolute;
+}
+.mov{
+	width: 6px;
+	height: 4px;
+	background: #fff;
+	position: absolute;
+	margin-top: -1px;
+}
+.movVertical{
+	width:5px;
+	height: 6px;
+	background: #fff;
+	position: absolute;
+	margin-left: -3px;
+	
+}
+

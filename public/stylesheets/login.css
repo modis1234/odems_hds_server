@@ -1,0 +1,199 @@
+body {	
+	margin: 0 auto;
+	text-align: left;
+	font-size: 14px;
+	font-family: '맑은 고딕','굴림','dotum','Arial';
+	letter-spacing:-0.05em;
+	-webkit-text-size-adjust:none;
+}
+
+a { text-decoration: none; }
+a img { border: 0; }
+
+
+
+/* 홈페이지 제목 설정 */
+h1
+{
+	text-align: center;
+	color: #ffffff;
+	margin:0;
+    font-size: 20px;
+    background-color: #2B2E3C;
+	font-size: 30px;
+	padding: 35px;
+}
+
+.div_simbal {
+	position: absolute;
+	width:100%;
+	left:0px;
+	text-align: center;
+	bottom: 38%;
+}
+.div_simbal img{
+	width: 300px;
+}
+
+.div_center {
+	position: absolute;
+	width:340px;
+	height:200px;
+	overflow: hidden;
+	left: 0;
+	right: 0;
+	margin: auto;
+	bottom: 13%;
+}
+
+.div_logo {
+	position: absolute;
+	width:100%;
+	text-align: center;
+	bottom: 10%;
+}
+
+.div_bottom {
+	position: absolute;
+	width:100%;
+	background-color: #2B2E3C;
+	bottom: 0;
+}
+
+.div_copy {
+	position: absolute;
+	line-height: 58px;
+	width:100%;
+	text-align: center;
+	/* vertical-align:middle;
+	top: 25px; */
+}
+
+.div_tel {
+	position: relative;
+	line-height: 58px;
+	margin-right:20px;
+	text-align: right;
+	/* vertical-align:middle;		
+	top: 20px; */
+
+}
+
+
+.input_n {
+	font-family: '맑은 고딕','굴림','dotum','Arial';
+	font-size:1em;
+	/* color:#0049C7; */
+	width:209px;
+	height:49px;
+	padding:5px;
+	border-width:1px;
+	border-color:rgb(204,204,204);
+	border-style:solid;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	} 
+
+
+
+.td_button{
+	background-color:#5693FC;
+	color:white;
+	cursor:pointer;
+        cursor:hand;
+	vertical-align:middle;
+	height:35px;
+}
+
+/* 로그인 */
+.input-box{
+	width: 80%;
+	float: left;
+}
+.input-box > input{
+	margin-top: 5px;
+}
+.submit-box {
+    /* position: relative; */
+    /* padding: 0px; */
+    width: 20%;
+    float: right;
+}
+#submit-btn {
+    background-color: #152451;
+    color: #ffffff;
+    font-weight: bold;
+	font-size: 16px;
+	height: 103px;
+    margin-top: 5px;
+	width: 121px;
+	border: 0;
+}
+#submit-btn:hover {
+	cursor: pointer;
+}
+#login-form {
+	width: 268px;
+}
+
+/* 팝업 */
+.loginFailPop {
+    width: 300px;
+    height: 165px;
+    background-color: #cccccc;
+    position: absolute;
+    z-index: 9999;
+	left: 42%;
+    top: 40%;
+    border: 1px solid #818286;
+	border-radius: 8px;
+	display: none;
+}
+.hearder_box {
+    width: 100%;
+    height: 20%;
+    background-color: #2B2E3C;
+    text-align: center;
+    font-size: 16px;
+	color: #fff;
+	padding-top: 10px;
+}
+
+.body_box {
+    width: 100%;
+    height: 80%;
+}
+
+.body_top {
+    width: 100%;
+    height: 40%;
+    text-align: center;
+    color: #3c3c3c;
+    font-weight: bold;
+    font-size: 15px;
+    padding-top: 20px;
+}
+.body_bottom {
+    width: 100%;
+    height: 20%;
+    text-align: center;
+}
+
+.body_bottom > button {
+    width: 60px;
+    height: 34px;
+    border-radius: 4px;
+    /* background-color: #7f8280; */
+}
+.body_bottom > button:hover {
+    cursor: pointer;
+}
+/* overlay*/
+.login-overlay {
+    height: 801px;
+    background-color: #b9b9b9;
+    position: relative;
+	opacity: 0.6;
+	display: none;
+}

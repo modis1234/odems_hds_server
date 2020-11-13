@@ -1,0 +1,14 @@
+var servers = {
+    apisvr : {
+      url : "http://192.168.0.39:9091" //개발서버
+    },
+    // apisvr : {
+    //   url : "http://119.207.78.144:9091" //개발서버
+    // }
+    // apisvr : {
+    //   url : "http://127.0.0.1:9091" //개발서버
+    // }
+  };
+  
+  module.exports = servers;
+  

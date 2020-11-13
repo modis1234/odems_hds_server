@@ -1,0 +1,289 @@
+/* 헤더 버튼 */
+.headerBtn li:hover{
+    background: #012d4a;
+    animation: btn 0.3s ease 0s 1 forwards;
+    cursor: pointer;
+}
+.headerBtn li:nth-last-child(1):hover{
+    background: #343434;
+}
+
+/* 정상  _nomal, 장애발생 _emer */
+
+/* 맵 포인트 */
+.Pemer{
+    /* animation: pulse 0.7s linear 0s infinite normal; */
+    background: #ff0000;
+}
+/* 알람 팝업 */
+.pop_1{display: none;}
+.pop_2{display: none;}
+.pop_3{display: none;}
+.pop_4{display: none;}
+.pop_5{display: none;}
+.pop_6{display: none;}
+
+/* UPS 리스트 테두리 */
+
+
+/* 전원 상태, 네트워크상태 */
+.nomal {
+    border: 2px dashed #159900;
+    border-radius: 50%;
+    width: 68px;
+    height: 68px;
+    margin-top: 4px;
+    text-align: center;
+    position: absolute;
+    animation:rotate 8s linear 0s infinite normal ;
+}
+.bnomal img:nth-child(1){
+    animation: bnomal 1s linear 0.5s infinite alternate;
+}
+.bnomal img:nth-child(2){
+    animation: bnomal 1s linear 2s infinite alternate;
+}
+.bnomal img:nth-child(3){
+    animation: bnomal 1s linear 3.5s infinite alternate;
+}
+
+.emer{
+    border: 2px solid #ff0000;
+    border-radius: 50%;
+    width: 68px;
+    height: 68px;
+    margin-top: 4px;
+    background: #FF0000;
+    position: absolute;
+    animation: emercolor 0.7s linear 0s infinite normal ;
+}
+.bemer > img{
+    animation: bemer 0.7s linear 0s infinite normal ;
+}
+
+
+
+/* 디바이스 아이콘 */
+.dnomal{
+    color: #22BD09;
+}
+.demer{
+    color: #ff0000;
+}
+/* 네트워크 구성도 */
+
+.LR1{
+    animation: moving1 3s linear 0s infinite normal;
+}
+.LR2{
+    animation: moving2 1s linear 0s infinite normal;
+}
+.LR3{
+    animation: moving3 1s linear 1s infinite normal;
+}
+
+.TB1{
+    animation: moving4 1s linear 0s infinite normal;
+}
+.TB2{
+    animation: moving5 1.5s linear 0s infinite normal;
+}
+.TB3{
+    animation: moving5 2.5s linear 1.5s infinite normal;
+}
+.TB4{
+    animation: moving7 1.5s linear 0.5s infinite normal;
+}
+.RL1{
+    animation: moving6 1.5s linear 0s infinite normal;
+}
+.RL2{
+    animation: moving6 1.5s linear 1s infinite normal;
+}
+.RL3{
+    animation: moving8 2.5s linear 1s infinite normal;
+}
+
+
+/* -------------------- 애니메이션 키프레임------------------- */
+
+@keyframes rotate {
+    0%{
+      transform:rotate(0deg);
+    }
+    100%{
+      transform:rotate(360deg);
+    }
+  }
+
+  @keyframes emercolor{
+      0%{
+          background: #ff0000;
+          /* transform: scale(1.0); */
+          
+      }
+      100%{
+          background: #C00000;
+          border: 2px solid #C00000;
+          /* transform: scale(1.1); */
+      }
+  }
+  @keyframes bnomal {
+      0%{
+          transform: scale(0.5);
+          }
+      50%{
+          transform: scale(1.2)
+      }
+      100%{
+          transform: scale(1);
+          /* color: #22BD09; */
+      }
+  }
+   @keyframes bemer {
+    0%{
+        transform: scale(0.5);
+        }
+    50%{
+        transform: scale(1.2)
+    }
+    100%{
+        transform: scale(1);
+        /* color: #22BD09; */
+    }
+}
+    @keyframes pulse {
+        from {
+        transform: scale(1);
+        }
+    
+        50% {
+        transform: scale(1.1);
+        }
+    
+        to {
+        transform: scale(1);
+        }
+    }
+
+    @keyframes btn{
+        0%{
+            opacity: 1;
+        }
+
+        100%{
+            opacity: 0.5;
+        }
+    }
+    @keyframes moving1{
+        0%{
+            transform: translateX();
+        }
+
+        50%{
+            transform: translateX(70px);
+        }
+
+        100%{
+            transform: translateX(148px);
+        }
+    }
+    @keyframes moving2{
+        0%{
+            transform: translateX();
+        }
+
+        50%{
+            transform: translateX(25px);
+        }
+
+        100%{
+            transform: translateX(50px);
+        }
+    }
+    @keyframes moving3{
+        0%{
+            transform: translateX();
+        }
+
+        50%{
+            transform: translateX(45px);
+        }
+
+        100%{
+            transform: translateX(90px);
+        }
+    }
+    @keyframes moving4{
+        0%{
+            transform: translateY(50px);
+        }
+
+        50%{
+            transform: translateY(25px);
+        }
+
+        100%{
+            transform: translateY(1px);
+        }
+    }
+    @keyframes moving5{
+        0%{
+            transform: translateY();
+        }
+
+        50%{
+            transform: translateY(50px);
+        }
+
+        100%{
+            transform: translateY(100px);
+        }
+    }
+    @keyframes moving6{
+        0%{
+            transform: translateX(80px);
+        }
+
+        50%{
+            transform: translateX(40px);
+        }
+
+        100%{
+            transform: translateX(1px);
+        }
+    }
+    @keyframes moving7{
+        0%{
+            transform: translateY(70px);
+        }
+
+        50%{
+            transform: translateY(30px);
+        }
+
+        100%{
+            transform: translateY(1px);
+        }
+    }
+    @keyframes moving8{
+        0%{
+            transform: translateX(170px);
+        }
+
+        50%{
+            transform: translateX(85px);
+        }
+
+        100%{
+            transform: translateX(1px);
+        }
+    }
+    @keyframes connect{
+        0%{
+            color: #343434 ;
+        }
+        100%{
+            color: #22BD09;
+        }
+    }

@@ -1,0 +1,279 @@
+header{
+	background-color: #000;
+	
+}
+.wrapper{
+	display: inline-block;
+	width: 1920px;
+}
+#leftBox{
+	display: inline-block;
+}
+
+/* 맵 - 포인트 위치 */
+.mapArea .ups_1{top: 402px;	left: 514px;}
+.mapArea .ups_2{top: 380px;	left: 841px;}
+.mapArea .ups_3{top: 564px;	left: 877px;}
+.mapArea .ups_4{top: 525px;	left: 791px;}
+.mapArea .ups_5{top: 494px;	left: 450px;}
+.mapArea .ups_6{top: 530px;	left: 291px;}
+
+/* 맵 - 알람팝업 위치 */
+.pop_1{
+	top:175px;
+	left: 604px;
+}
+.line_1_x{
+	width: 58px;
+	transform: rotate(-45deg);
+	top: 210px;
+	left: -74px;
+}
+.line_1_y{
+	width: 23px;
+	top: 190px;
+	left: -25px;
+}
+.pop_2{
+	 top:158px;
+	 left:953px;                                                                                                            
+}
+.line_2_x{
+	width: 50px;
+	top: 190px;
+	left: -52px;
+}
+.line_2_y{
+	width: 50px;
+	transform: rotate(-45deg);
+	top: 207px;
+	left: -95px;
+}
+.pop_3{
+	top:630px;
+	left:1027px;                                                                                                            
+}
+.line_3_x{
+	width: 90px;
+	top: 0px;
+	left: -92px;
+}
+.line_3_y{
+	width: 57px;
+	transform: rotate(45deg);
+	top: -19px;
+	left: -140px;
+}
+.pop_4{
+	top:737px;
+	left:470px;                                                                                                            
+}
+.line_4_x{
+	width: 50px;
+	top: 0px;
+	left: 210px;
+}
+.line_4_y{
+	width: 194px;
+	transform: rotate(-70deg);
+	top: -91px;
+	left: 197px;
+}
+.pop_5{
+	top:805px;
+	left:93px;                                                                                                            
+}
+.line_5_x{
+	width: 50px;
+	top: -1px;
+	left: 210px;
+}
+.line_5_y{
+	width: 303px;
+	transform: rotate(-70deg);
+	top: -143px;
+	left: 161px;
+}
+.pop_6{
+	top:594px;
+	left:24px;                                                                                                            
+}
+.line_6_x{
+	width: 25px;
+	top: -1px;
+	left: 210px;
+}
+.line_6_y{
+	width: 55px;
+	transform: rotate(-45deg);
+	top: -20px;
+	left: 227px;
+}
+#rightBox{
+	float: right;
+	
+}
+
+/* 맵 - 디바이스 위치 */
+.mapArea .p1-d1{top: 397px; left: 548px;}
+.mapArea .p1-c1{top: 205px; left: 524px;}
+.mapArea .p2-d1{top: 384px; left: 873px;}
+.mapArea .p2-s1{top: 390px; left: 1008px;}
+.mapArea .p2-s2{top: 390px; left: 1150px;}
+.mapArea .p3-s1{top: 573px; left: 911px;}
+.mapArea .p3-s2{top: 630px; left: 799px;}
+.mapArea .p3-c1{top: 524px; left: 1061px;}
+.mapArea .p3-c2{top: 663px; left: 879px;}
+.mapArea .p3-g1{top: 827px; left: 918px;}
+.mapArea .p4-d1{top: 582px; left: 566px;}
+.mapArea .p4-d2{top: 618px; left: 505px;}
+.mapArea .p5-w1{top: 505px; left: 481px;}
+.mapArea .p5-d1{top: 490px; left: 429px;}
+.mapArea .p6-w1{top: 541px; left: 332px;}
+.mapArea .p6-d1{top: 520px; left: 266px;}
+
+
+/* 네트워크 구성도 */
+#netBox{
+	border: 1px solid #000;
+	width: 600px;
+	height: 300px;
+	margin: 5px 10px;
+	position: relative;
+}
+#netBox .tit{
+	padding: 7px;
+	opacity: 0.6;
+}
+#netBox .baseLine{
+	position: relative;;
+	border-bottom: 3px solid #000;
+	width: 408px;
+	top: 95px;
+	margin-left: 16px;
+}
+#netBox .baseLine2{
+	position: relative;;
+	border-bottom: 3px solid #000;
+	width: 136px;
+	top: 92px;
+	margin-left: 446px;
+}
+#netBox .devIcon{
+	background: #000;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	text-align:center;
+	line-height: 1.7;
+}
+
+#netBox .ups_1{top: 70px; left: 217px;}
+#netBox .ups_2{top: 70px; left: 360px;}
+#netBox .ups_3{top: 160px; left: 417px;}
+#netBox .ups_4{top: 251px; left: 417px;}
+#netBox .ups_5{top: 175px; left: 160px;}
+#netBox .ups_6{top: 251px; left: 160px;}
+
+#netBox .p1-d1{top: 20px; left: 217px;}
+#netBox .p2-d1{top: 20px; left: 359px;}
+#netBox .p2-s1{top: 70px; left: 417px;}
+#netBox .p2-s2{top: 70px; left: 517px;}
+#netBox .p4-d1{top: 251px; left: 340px;}
+#netBox .p4-d2{top: 175px; left: 340px;}
+#netBox .p5-d1{top: 175px; left: 80px;}
+#netBox .p5-w1{top: 175px; left: 90px;}
+#netBox .p5-w2{top: 175px; left: 40px;}
+#netBox .p6-d1{top: 251px; left: 80px}
+#netBox .p6-w1{top: 251px; left: 90px;}
+#netBox .p6-w2{top: 251px; left: 40px;}
+
+.line_1{
+	top: 45px;
+    left: 225px;
+    width: 148px;
+	border-bottom: 1px dashed !important;
+}
+.line_2{
+	top:  44px;
+	left: 388px;
+	width: 50px;
+}
+.line_3{
+	top:43px;
+	left:440px;
+	width:84px;
+}
+.line_4{
+	top: 30px;
+	left: 231px;
+	height: 50px;
+}
+.line_5{
+	top: 30px;
+	left: 374px;
+	height: 50px;
+}
+.line_6{
+	top: 84px;
+	left: 431px;
+	height: 100px;
+}
+.line_7{
+	top: 172px;
+	left:431px;
+	height: 100px;
+}
+
+.line_8{
+	top: 222px;
+	left: 355px;
+	width: 80px;
+}
+.line_9{
+	top: 188px;
+	left: 354px;
+	height: 70px;
+}
+.line_10{
+	top: 222px;
+	left: 180px;
+	width: 170px;
+}
+.line_11{
+	top: 145px;
+	left: 180px;
+	width: 170px
+}
+.line_12{
+	top: 220px;
+	left: 95px;
+	width: 80px;
+}
+.line_13{
+	top: 143px;
+	left: 95px;
+	width: 80px;
+}
+.line_14{
+	top: 143px;
+	left: 100px;
+	width: 90px;
+}
+.line_15{
+	top: 217px;
+	left: 100px;
+	width: 90px;
+}
+.line_16{
+	top: 141px;
+	left: 50px;
+	width: 40px;
+	border-bottom: 1px dashed !important;
+}
+.line_17{
+	top: 215px;
+	left: 50px;
+	width: 50px;
+	border-bottom: 1px dashed !important;
+}
