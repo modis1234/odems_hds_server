@@ -13,6 +13,7 @@ var _id;
 var _isLogined = false;
 /* GET home page. */
 router.get('/', function(req, res, next) {
+    
     console.log(req.session.isLogined);
      _isLogined = req.session.isLogined;
     if( _isLogined ) {

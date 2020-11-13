@@ -21,17 +21,23 @@ var siteRouter = require('./routes/siteRouter');
 var upsRouter = require('./routes/upsRouter');
 
 
-
-
 var app = express();
 
 var options = {
-  host: '119.207.78.144',
-  port: '13336',
-  user: 'open_m',
-  password:'*man(2019)',
+  host: '127.0.0.1',
+  port: '3306',
+  user: 'root',
+  password:'work1801!@',
   database:'odms',
 }
+
+// var options = {
+//   host: '127.0.0.1',
+//   port: '3306',
+//   user: 'root',
+//   password:'work1801!',
+//   database:'odms'
+// }
 
 var sessionStore = new MySQLStore(options);
 
